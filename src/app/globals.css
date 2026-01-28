@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --font-outfit: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --color-brand-green: #7dff68;
+}
+
+/* Enable .dark class based dark mode in Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html,
+  body {
+    @apply max-w-full overflow-x-hidden font-outfit text-black bg-white antialiased transition-colors duration-300;
+  }
+
+  .dark body {
+    background-color: #0c0c0c;
+    color: #ffffff;
+  }
+
+  a {
+    @apply no-underline;
+    color: inherit;
+  }
+
+  button {
+    @apply cursor-pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+}
+
+/* Custom Utilities for Marquee */
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 30s linear infinite;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
