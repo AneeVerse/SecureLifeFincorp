@@ -3,7 +3,7 @@ import { Target, ShieldCheck, Star } from 'lucide-react';
 
 export function WhoWeAre() {
     return (
-        <section className="w-full py-24 bg-[#0a0a0a] text-white overflow-hidden">
+        <section id="about-us" className="w-full py-24 bg-[#0a0a0a] text-white overflow-hidden">
             <div className="max-w-[1250px] mx-auto px-5 flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
 
                 {/* Text Content - Moved up on mobile */}

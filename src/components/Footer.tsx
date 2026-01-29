@@ -37,7 +37,7 @@ export function Footer() {
                         </div>
 
                         <button
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                             className="relative z-10 bg-[#0D121F] text-white px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl"
                         >
                             Get In touch
@@ -81,10 +81,10 @@ export function Footer() {
                                     <div className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green"></div>
                                 </h4>
                                 <ul className="space-y-4 text-neutral-400 text-sm">
-                                    <li><Link href="/" className="hover:text-brand-green transition-colors">Home</Link></li>
-                                    <li><Link href="/about" className="hover:text-brand-green transition-colors">About Us</Link></li>
-                                    <li><Link href="/services" className="hover:text-brand-green transition-colors">Our Services</Link></li>
-                                    <li><Link href="/contact" className="hover:text-brand-green transition-colors">Contact</Link></li>
+                                    <li><Link href="/#" className="hover:text-brand-green transition-colors">Home</Link></li>
+                                    <li><Link href="/#about-us" className="hover:text-brand-green transition-colors">About Us</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Our Services</Link></li>
+                                    <li><button onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))} className="hover:text-brand-green transition-colors text-left">Contact</button></li>
                                 </ul>
                             </div>
 
@@ -95,10 +95,10 @@ export function Footer() {
                                     <div className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green"></div>
                                 </h4>
                                 <ul className="space-y-4 text-neutral-400 text-sm">
-                                    <li><Link href="/services/personal-financial-planning" className="hover:text-brand-green transition-colors">Financial Planning</Link></li>
-                                    <li><Link href="/services/business-financial-planning" className="hover:text-brand-green transition-colors">Business Planning</Link></li>
-                                    <li><Link href="/services/insurance-services" className="hover:text-brand-green transition-colors">Insurance Services</Link></li>
-                                    <li><Link href="/services/tax-investment-options" className="hover:text-brand-green transition-colors">Tax & Investments</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Financial Planning</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Business Planning</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Insurance Services</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Tax & Investments</Link></li>
                                 </ul>
                             </div>
 
@@ -116,13 +116,13 @@ export function Footer() {
                                         <input
                                             type="email"
                                             placeholder="Email"
-                                            onFocus={() => setIsModalOpen(true)}
-                                            onClick={() => setIsModalOpen(true)}
+                                            onFocus={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                             readOnly
                                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-brand-green transition-colors cursor-pointer"
                                         />
                                         <button
-                                            onClick={() => setIsModalOpen(true)}
+                                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                             className="w-full bg-brand-green text-black font-bold py-4 rounded-xl hover:bg-white transition-colors active:scale-[0.98]"
                                         >
                                             Subscribe

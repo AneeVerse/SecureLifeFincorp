@@ -7,6 +7,15 @@ import { ContactModal } from './ContactModal';
 export function Hero() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Listen for global open-contact event
+    useState(() => {
+        if (typeof window !== 'undefined') {
+            const handleOpen = () => setIsModalOpen(true);
+            window.addEventListener('open-contact', handleOpen);
+            return () => window.removeEventListener('open-contact', handleOpen);
+        }
+    });
+
     return (
         <>
             <section

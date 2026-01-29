@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -68,23 +70,26 @@ export function Blog() {
                                 </p>
 
                                 <div className="pt-3 mt-auto border-t border-neutral-200/60 dark:border-white/5">
-                                    <Link href="/blog" className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-black dark:text-white hover:text-brand-green transition-colors">
+                                    <button
+                                        onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                                        className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-black dark:text-white hover:text-brand-green transition-colors"
+                                    >
                                         Learn More
                                         <span className="ml-2 w-4 h-[1px] bg-current transition-all group-hover:w-6"></span>
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                {/* View More Button */}
                 <div className="text-center">
-                    <Link href="/blog">
-                        <button className="px-8 py-3 bg-black text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-brand-green hover:text-black transition-all duration-300 active:scale-95 shadow-lg shadow-black/10">
-                            View more
-                        </button>
-                    </Link>
+                    <button
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                        className="px-8 py-3 bg-black text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-brand-green hover:text-black transition-all duration-300 active:scale-95 shadow-lg shadow-black/10"
+                    >
+                        View more
+                    </button>
                 </div>
             </div>
         </section>

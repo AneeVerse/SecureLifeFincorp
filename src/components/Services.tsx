@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
@@ -35,7 +37,7 @@ const services = [
 
 export function Services() {
     return (
-        <section className="w-full py-20 bg-white dark:bg-black transition-colors duration-300">
+        <section id="our-solutions" className="w-full py-20 bg-white dark:bg-black transition-colors duration-300">
             <div className="max-w-[1250px] mx-auto px-5">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-2 border-b border-neutral-100 dark:border-white/10 pb-12">
@@ -51,18 +53,22 @@ export function Services() {
                         </h2>
                     </div>
                     <div className="flex-shrink-0">
-                        <Link href="/services">
-                            <button className="bg-black text-white px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-brand-green hover:text-black transition-all duration-300 shadow-xl shadow-black/5 active:scale-95">
-                                All services
-                            </button>
-                        </Link>
+                        <button
+                            onClick={() => window.scrollTo({ top: document.getElementById('our-solutions')?.offsetTop ? document.getElementById('our-solutions')!.offsetTop - 80 : 0, behavior: 'smooth' })}
+                            className="bg-black text-white px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-brand-green hover:text-black transition-all duration-300 shadow-xl shadow-black/5 active:scale-95"
+                        >
+                            Our expertise
+                        </button>
                     </div>
                 </div>
 
                 {/* Services Grid - Horizontal Scroll on Mobile, 4 Columns on Desktop */}
                 <div className="flex lg:grid lg:grid-cols-4 gap-6 overflow-x-auto lg:overflow-x-visible pb-8 lg:pb-0 scrollbar-hide px-5 -mx-5 lg:px-0 lg:mx-0 snap-x snap-mandatory">
                     {services.map((service, index) => (
-                        <Link key={index} href={`/services/${service.slug}`} className="group relative flex-shrink-0 w-[85vw] sm:w-[45vw] lg:w-auto h-[420px] rounded-[32px] overflow-hidden flex flex-col justify-end p-8 border border-neutral-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all duration-500 snap-center cursor-pointer">
+                        <div key={index}
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                            className="group relative flex-shrink-0 w-[85vw] sm:w-[45vw] lg:w-auto h-[420px] rounded-[32px] overflow-hidden flex flex-col justify-end p-8 border border-neutral-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all duration-500 snap-center cursor-pointer"
+                        >
                             {/* Background Image */}
                             <Image
                                 src={service.image}
@@ -97,7 +103,7 @@ export function Services() {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>

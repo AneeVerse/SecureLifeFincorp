@@ -25,7 +25,6 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Prevent body scroll when mobile menu is open
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden';
@@ -34,15 +33,42 @@ export function Navbar() {
         }
     }, [isMobileMenuOpen]);
 
+    const scrollToSection = (e: React.MouseEvent, id: string) => {
+        e.preventDefault();
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 80; // Navbar height
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+            setIsMobileMenuOpen(false);
+        } else if (id === 'top') {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            setIsMobileMenuOpen(false);
+        }
+    };
+
     return (
         <>
             <nav className={`fixed top-0 left-0 w-full z-[1000] px-5 py-4 transition-all duration-300 border-b ${isScrolled
-                    ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md border-black/5 dark:border-white/10 shadow-sm'
-                    : 'bg-transparent border-transparent'
+                ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md border-black/5 dark:border-white/10 shadow-sm'
+                : 'bg-transparent border-transparent'
                 }`}>
                 <div className="max-w-[1250px] mx-auto flex justify-between items-center">
                     {/* Logo Area */}
-                    <Link href="/" className="flex items-center gap-2 group z-[1001]">
+                    <div
+                        onClick={(e) => scrollToSection(e, 'top')}
+                        className="flex items-center gap-2 group z-[1001] cursor-pointer"
+                    >
                         <div className="relative w-8 h-8 overflow-hidden rounded-lg">
                             <Image
                                 src="/images/website-logo.png"
@@ -54,15 +80,15 @@ export function Navbar() {
                         <span className="text-xl font-bold text-black dark:text-white tracking-tight">
                             SecureLife <span className="text-black dark:text-white">Fincorp</span>
                         </span>
-                    </Link>
+                    </div>
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-10">
                         <ul className="flex list-none gap-8">
-                            <li><Link href="/" className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors">Home</Link></li>
-                            <li><Link href="/about" className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors">About</Link></li>
-                            <li><Link href="/services" className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors">Services</Link></li>
-                            <li><Link href="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors">Contact</Link></li>
+                            <li><button onClick={(e) => scrollToSection(e, 'top')} className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors cursor-pointer">Home</button></li>
+                            <li><button onClick={(e) => scrollToSection(e, 'about-us')} className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors cursor-pointer">About</button></li>
+                            <li><button onClick={(e) => scrollToSection(e, 'our-solutions')} className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors cursor-pointer">Services</button></li>
+                            <li><button onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))} className="text-[11px] font-bold uppercase tracking-[0.2em] text-black dark:text-white hover:text-brand-green transition-colors cursor-pointer">Contact</button></li>
                         </ul>
                     </div>
 
@@ -70,11 +96,12 @@ export function Navbar() {
                     <div className="flex items-center gap-4 z-[1001]">
                         <ThemeToggle />
 
-                        <Link href="/contact" className="hidden sm:block">
-                            <button className="bg-black dark:bg-brand-green text-white dark:text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:scale-105 transition-all active:scale-95 shadow-lg">
-                                Get Started
-                            </button>
-                        </Link>
+                        <button
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                            className="hidden sm:block bg-black dark:bg-brand-green text-white dark:text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:scale-105 transition-all active:scale-95 shadow-lg"
+                        >
+                            Get Started
+                        </button>
 
                         {/* Mobile Toggle Button */}
                         <button
@@ -94,49 +121,52 @@ export function Navbar() {
                 <div className="flex flex-col gap-10">
                     <ul className="list-none space-y-8">
                         <li>
-                            <Link
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                href="/"
-                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors"
+                            <button
+                                onClick={(e) => scrollToSection(e, 'top')}
+                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors text-left w-full"
                             >
                                 Home
-                            </Link>
+                            </button>
                         </li>
                         <li>
-                            <Link
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                href="/about"
-                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors"
+                            <button
+                                onClick={(e) => scrollToSection(e, 'about-us')}
+                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors text-left w-full"
                             >
                                 About
-                            </Link>
+                            </button>
                         </li>
                         <li>
-                            <Link
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                href="/services"
-                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors"
+                            <button
+                                onClick={(e) => scrollToSection(e, 'our-solutions')}
+                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors text-left w-full"
                             >
                                 Services
-                            </Link>
+                            </button>
                         </li>
                         <li>
-                            <Link
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                href="/contact"
-                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors"
+                            <button
+                                onClick={() => {
+                                    setIsMobileMenuOpen(false);
+                                    window.dispatchEvent(new CustomEvent('open-contact'));
+                                }}
+                                className="text-4xl font-bold text-black dark:text-white hover:text-brand-green transition-colors text-left"
                             >
                                 Contact
-                            </Link>
+                            </button>
                         </li>
                     </ul>
 
                     <div className="pt-10 border-t border-black/5 dark:border-white/5">
-                        <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full bg-brand-green text-black py-5 rounded-2xl font-bold text-xl shadow-xl active:scale-95 transition-transform">
-                                Get Started Now
-                            </button>
-                        </Link>
+                        <button
+                            onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                window.dispatchEvent(new CustomEvent('open-contact'));
+                            }}
+                            className="w-full bg-brand-green text-black py-5 rounded-2xl font-bold text-xl shadow-xl active:scale-95 transition-transform"
+                        >
+                            Get Started Now
+                        </button>
                     </div>
                 </div>
             </div>
