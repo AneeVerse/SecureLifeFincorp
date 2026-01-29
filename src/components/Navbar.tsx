@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -9,6 +10,8 @@ import { useState, useEffect } from 'react';
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
 
     // Handle scroll for sticky effect
     useEffect(() => {
@@ -36,6 +39,7 @@ export function Navbar() {
     const scrollToSection = (e: React.MouseEvent, id: string) => {
         e.preventDefault();
         const element = document.getElementById(id);
+
         if (element) {
             const offset = 80; // Navbar height
             const bodyRect = document.body.getBoundingClientRect().top;
@@ -48,11 +52,17 @@ export function Navbar() {
                 behavior: 'smooth'
             });
             setIsMobileMenuOpen(false);
-        } else if (id === 'top') {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        } else {
+            // If element doesn't exist (e.g. on contact page), go home with hash
+            if (id === 'top') {
+                if (pathname === '/') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    router.push('/');
+                }
+            } else {
+                router.push(`/#${id}`);
+            }
             setIsMobileMenuOpen(false);
         }
     };

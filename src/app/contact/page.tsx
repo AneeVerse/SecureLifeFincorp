@@ -11,7 +11,8 @@ export default function ContactPage() {
         email: '',
         countryCode: '+91',
         phone: '',
-        subject: 'General Inquiry',
+        businessType: '',
+        selectedServices: [] as string[],
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,6 +23,15 @@ export default function ContactPage() {
         setFormData(prev => ({
             ...prev,
             [e.target.name]: e.target.value
+        }));
+    };
+
+    const toggleService = (service: string) => {
+        setFormData(prev => ({
+            ...prev,
+            selectedServices: prev.selectedServices.includes(service)
+                ? prev.selectedServices.filter(s => s !== service)
+                : [...prev.selectedServices, service]
         }));
     };
 
@@ -40,9 +50,9 @@ export default function ContactPage() {
                     firstName: formData.fullName,
                     email: formData.email,
                     phone: `${formData.countryCode} ${formData.phone}`,
-                    subject: formData.subject,
+                    extraInfo: `Business: ${formData.businessType} | Services: ${formData.selectedServices.join(', ')}`,
                     message: formData.message,
-                    source: 'contact'
+                    source: 'contact-page-high-intent'
                 }),
             });
 
@@ -57,7 +67,15 @@ export default function ContactPage() {
             // Reset form after showing success
             setTimeout(() => {
                 setIsSubmitted(false);
-                setFormData({ fullName: '', email: '', countryCode: '+91', phone: '', subject: 'General Inquiry', message: '' });
+                setFormData({
+                    fullName: '',
+                    email: '',
+                    countryCode: '+91',
+                    phone: '',
+                    businessType: '',
+                    selectedServices: [],
+                    message: ''
+                });
             }, 3000);
 
         } catch (err) {
@@ -67,27 +85,22 @@ export default function ContactPage() {
         }
     };
 
+    const serviceOptions = [
+        'Fire', 'Theft', 'Cyber', 'Health',
+        'Personal', 'Financial', 'Machinery', 'Employee'
+    ];
+
+    const businessTypes = [
+        'Manufacturing', 'Retail', 'IT', 'Logistics',
+        'Healthcare', 'Real Estate', 'Education', 'Other'
+    ];
+
     const countryCodes = [
         { code: '+91', label: '🇮🇳 India (+91)' },
         { code: '+1', label: '🇺🇸 USA (+1)' },
         { code: '+44', label: '🇬🇧 UK (+44)' },
         { code: '+971', label: '🇦🇪 UAE (+971)' },
         { code: '+61', label: '🇦🇺 Australia (+61)' },
-        { code: '+1', label: '🇨🇦 Canada (+1)' },
-        { code: '+65', label: '🇸🇬 Singapore (+65)' },
-        { code: '+49', label: '🇩🇪 Germany (+49)' },
-        { code: '+33', label: '🇫🇷 France (+33)' },
-        { code: '+81', label: '🇯🇵 Japan (+81)' },
-        { code: '+86', label: '🇨🇳 China (+86)' },
-        { code: '+7', label: '🇷🇺 Russia (+7)' },
-        { code: '+55', label: '🇧🇷 Brazil (+55)' },
-        { code: '+27', label: '🇿🇦 South Africa (+27)' },
-        { code: '+966', label: '🇸🇦 Saudi Arabia (+966)' },
-        { code: '+60', label: '🇲🇾 Malaysia (+60)' },
-        { code: '+62', label: '🇮🇩 Indonesia (+62)' },
-        { code: '+66', label: '🇹🇭 Thailand (+66)' },
-        { code: '+84', label: '🇻🇳 Vietnam (+84)' },
-        { code: '+82', label: '🇰🇷 South Korea (+82)' },
     ];
 
     return (
@@ -112,7 +125,7 @@ export default function ContactPage() {
 
             {/* Contact Content */}
             <section className="py-24 px-5 bg-white dark:bg-black transition-colors duration-300">
-                <div className="max-w-[1250px] mx-auto grid lg:grid-cols-[1fr_500px] gap-20 items-stretch">
+                <div className="max-w-[1250px] mx-auto grid lg:grid-cols-[1fr_450px] gap-20 items-stretch">
 
                     {/* Form Side */}
                     <div className="bg-white dark:bg-[#0a0a0a] rounded-[50px] border border-neutral-100 dark:border-white/5 p-8 md:p-12 shadow-sm transition-colors duration-300">
@@ -192,18 +205,19 @@ export default function ContactPage() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">Subject</label>
+                                            <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">Business Type</label>
                                             <div className="relative">
                                                 <select
-                                                    name="subject"
-                                                    value={formData.subject}
+                                                    name="businessType"
+                                                    required
+                                                    value={formData.businessType}
                                                     onChange={handleChange}
                                                     className="w-full bg-neutral-50 dark:bg-[#151515] border border-neutral-100 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-green transition-colors appearance-none dark:text-white cursor-pointer"
                                                 >
-                                                    <option>General Inquiry</option>
-                                                    <option>Financial Planning</option>
-                                                    <option>Insurance Quote</option>
-                                                    <option>Tax Consulting</option>
+                                                    <option value="" disabled>Select Business Type</option>
+                                                    {businessTypes.map(type => (
+                                                        <option key={type} value={type} className="dark:bg-[#151515]">{type}</option>
+                                                    ))}
                                                 </select>
                                                 <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
                                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -212,12 +226,31 @@ export default function ContactPage() {
                                         </div>
                                     </div>
 
+                                    <div className="space-y-4">
+                                        <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">Our Insurance Services (Select all that apply)</label>
+                                        <div className="flex flex-wrap gap-3">
+                                            {serviceOptions.map(service => (
+                                                <button
+                                                    key={service}
+                                                    type="button"
+                                                    onClick={() => toggleService(service)}
+                                                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all border ${formData.selectedServices.includes(service)
+                                                        ? 'bg-brand-green border-brand-green text-black'
+                                                        : 'bg-neutral-50 dark:bg-[#151515] border-neutral-100 dark:border-white/10 text-neutral-500 dark:text-neutral-400 hover:border-brand-green'
+                                                        }`}
+                                                >
+                                                    {service}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">How can we help?</label>
+                                        <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">Tell us more</label>
                                         <textarea
                                             name="message"
                                             placeholder="Tell us about your requirements..."
-                                            rows={6}
+                                            rows={4}
                                             value={formData.message}
                                             onChange={handleChange}
                                             className="w-full bg-neutral-50 dark:bg-[#151515] border border-neutral-100 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-green transition-colors resize-none dark:text-white"
@@ -254,7 +287,6 @@ export default function ContactPage() {
 
                     {/* Info Side */}
                     <div className="space-y-8">
-                        {/* Info Cards */}
                         <div className="bg-[#0a0a0a] dark:bg-[#050505] text-white p-12 rounded-[50px] space-y-12 h-full border border-white/5 shadow-2xl transition-colors duration-300">
                             <div className="space-y-8">
                                 <h3 className="text-3xl font-bold text-brand-green italic">Contact Information</h3>
@@ -309,7 +341,6 @@ export default function ContactPage() {
                                 </div>
                             </div>
 
-                            {/* Support Tag */}
                             <div className="pt-8 flex justify-center">
                                 <div className="inline-flex items-center gap-3 bg-brand-green/10 px-6 py-3 rounded-2xl border border-brand-green/20">
                                     <div className="w-2 h-2 rounded-full bg-brand-green animate-pulse"></div>
@@ -318,7 +349,6 @@ export default function ContactPage() {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </section>
 

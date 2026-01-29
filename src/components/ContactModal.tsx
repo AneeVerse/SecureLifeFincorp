@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Shield, Clock, CheckCircle } from 'lucide-react';
+import { X, Shield, Clock, CheckCircle, ArrowRight } from 'lucide-react';
 
 interface ContactModalProps {
     isOpen: boolean;
@@ -15,6 +15,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         email: '',
         countryCode: '+91',
         phone: '',
+        businessType: '',
+        selectedServices: [] as string[],
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,7 +58,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 body: JSON.stringify({
                     ...formData,
                     phone: `${formData.countryCode} ${formData.phone}`,
-                    source: 'hero'
+                    extraInfo: `Business: ${formData.businessType} | Services: ${formData.selectedServices.join(', ')}`,
+                    source: 'high-intent-modal'
                 }),
             });
 
@@ -71,7 +74,16 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             // Reset after showing success
             setTimeout(() => {
                 setIsSubmitted(false);
-                setFormData({ firstName: '', lastName: '', email: '', countryCode: '+91', phone: '', message: '' });
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    countryCode: '+91',
+                    phone: '',
+                    businessType: '',
+                    selectedServices: [],
+                    message: ''
+                });
                 onClose();
             }, 2500);
 
@@ -89,252 +101,265 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         }));
     };
 
-    const countryCodes = [
-        { code: '+91', label: '🇮🇳 India (+91)' },
-        { code: '+1', label: '🇺🇸 USA (+1)' },
-        { code: '+44', label: '🇬🇧 UK (+44)' },
-        { code: '+971', label: '🇦🇪 UAE (+971)' },
-        { code: '+61', label: '🇦🇺 Australia (+61)' },
-        { code: '+1', label: '🇨🇦 Canada (+1)' },
-        { code: '+65', label: '🇸🇬 Singapore (+65)' },
-        { code: '+49', label: '🇩🇪 Germany (+49)' },
-        { code: '+33', label: '🇫🇷 France (+33)' },
-        { code: '+81', label: '🇯🇵 Japan (+81)' },
-        { code: '+86', label: '🇨🇳 China (+86)' },
-        { code: '+7', label: '🇷🇺 Russia (+7)' },
-        { code: '+55', label: '🇧🇷 Brazil (+55)' },
-        { code: '+27', label: '🇿🇦 South Africa (+27)' },
-        { code: '+966', label: '🇸🇦 Saudi Arabia (+966)' },
-        { code: '+60', label: '🇲🇾 Malaysia (+60)' },
-        { code: '+62', label: '🇮🇩 Indonesia (+62)' },
-        { code: '+66', label: '🇹🇭 Thailand (+66)' },
-        { code: '+84', label: '🇻🇳 Vietnam (+84)' },
-        { code: '+82', label: '🇰🇷 South Korea (+82)' },
+    const toggleService = (service: string) => {
+        setFormData(prev => ({
+            ...prev,
+            selectedServices: prev.selectedServices.includes(service)
+                ? prev.selectedServices.filter(s => s !== service)
+                : [...prev.selectedServices, service]
+        }));
+    };
+
+    const serviceOptions = [
+        'Fire', 'Theft', 'Cyber', 'Health',
+        'Personal', 'Financial', 'Machinery', 'Employee'
     ];
 
     if (!isOpen) return null;
 
     return (
         <div
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+            className="fixed inset-0 z-[2000] flex items-center justify-center p-2 sm:p-4 md:p-6"
             onClick={onClose}
         >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-300" />
 
             {/* Modal Container */}
             <div
-                className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden rounded-[24px] shadow-2xl animate-modal-in"
+                className="relative w-full max-w-[1000px] bg-white dark:bg-[#0d0d0d] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] animate-modal-in flex flex-col md:flex-row transition-colors duration-300"
                 onClick={e => e.stopPropagation()}
             >
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white md:text-gray-600 md:bg-gray-100 md:hover:bg-gray-200"
+                    className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400"
                     aria-label="Close modal"
                 >
-                    <X size={20} />
+                    <X size={18} />
                 </button>
 
-                <div className="flex flex-col md:flex-row">
-                    {/* Left Panel - Brand Info */}
-                    <div className="bg-brand-green p-6 md:p-10 md:w-[40%] text-black">
-                        <h3 className="text-xl md:text-2xl font-bold mb-2">
-                            Need Insurance?
+                {/* Left Panel - Brand Info - Hidden on mobile */}
+                <div className="hidden md:flex bg-gradient-to-br from-brand-green to-[#00B85F] p-6 md:p-10 md:w-[38%] text-black flex-col justify-between relative overflow-hidden">
+                    <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none" />
+
+                    <div className="relative z-10">
+                        <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center mb-8 shadow-xl transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                            <Shield size={24} className="text-brand-green" />
+                        </div>
+                        <h3 className="text-3xl lg:text-4xl font-bold mb-4 tracking-tight leading-tight">
+                            Secure your Future today.
                         </h3>
-                        <p className="text-black/70 text-sm md:text-base mb-6 md:mb-8">
-                            Our experts will guide you through the entire insurance process.
+                        <p className="text-black/70 text-sm mb-6 leading-relaxed font-medium">
+                            Join 5,000+ businesses who trust SecureLife for their financial protection.
                         </p>
 
-                        <div className="space-y-4 md:space-y-5">
-                            <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg flex-shrink-0">
-                                    <Shield size={18} className="text-brand-green" />
+                        <div className="space-y-6">
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-white/30 rounded-xl backdrop-blur-sm border border-white/40">
+                                    <Clock size={18} className="text-black" />
                                 </div>
                                 <div>
-                                    <h4 className="font-semibold text-sm md:text-base">100% Secure Process</h4>
-                                    <p className="text-black/60 text-xs md:text-sm">Your data is protected with us</p>
+                                    <h4 className="font-bold text-sm">Quick Approval</h4>
+                                    <p className="text-black/60 text-xs">Policy within 24 hours</p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg flex-shrink-0">
-                                    <Clock size={18} className="text-brand-green" />
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-white/30 rounded-xl backdrop-blur-sm border border-white/40">
+                                    <Shield size={18} className="text-black" />
                                 </div>
                                 <div>
-                                    <h4 className="font-semibold text-sm md:text-base">24/7 Customer Support</h4>
-                                    <p className="text-black/60 text-xs md:text-sm">We&apos;re here whenever you need</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg flex-shrink-0">
-                                    <CheckCircle size={18} className="text-brand-green" />
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-sm md:text-base">Quick Approval</h4>
-                                    <p className="text-black/60 text-xs md:text-sm">Get your policy within 24 hours</p>
+                                    <h4 className="font-bold text-sm">Fully Regulated</h4>
+                                    <p className="text-black/60 text-xs">Safe & Secure Process</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Right Panel - Form */}
-                    <div className="bg-white dark:bg-[#1a1a1a] p-6 md:p-10 md:w-[60%]">
-                        {isSubmitted ? (
-                            <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center">
-                                <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mb-4 animate-bounce-in">
-                                    <CheckCircle size={32} className="text-black" />
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Thank You!</h3>
-                                <p className="text-gray-600 dark:text-gray-400">We&apos;ll get back to you shortly.</p>
+                    <div className="mt-8 relative z-10">
+                        <div className="p-3 bg-black rounded-xl border border-white/10">
+                            <p className="text-brand-green text-[10px] font-bold uppercase tracking-widest mb-0.5">Response Time</p>
+                            <p className="text-white text-sm font-medium italic">&lt; 15 Minutes</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Panel - Form */}
+                <div className="p-4 sm:p-6 md:p-10 w-full md:w-[62%] max-h-[96vh] md:max-h-[90vh] overflow-y-auto scrollbar-hide bg-white dark:bg-[#0d0d0d] transition-colors duration-300">
+                    {isSubmitted ? (
+                        <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center space-y-4">
+                            <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center shadow-lg shadow-brand-green/20 animate-bounce-in">
+                                <CheckCircle size={32} className="text-black" />
                             </div>
-                        ) : (
-                            <>
-                                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                            <div className="space-y-1">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Success!</h3>
+                                <p className="text-gray-500 dark:text-gray-400 text-sm max-w-xs mx-auto">
+                                    We'll contact you shortly.
+                                </p>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="space-y-3 sm:space-y-4 md:space-y-6">
+                            <div className="space-y-1">
+                                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                                     Get Free Consultation
                                 </h3>
-                                <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
-                                    Fill out the form and our expert will contact you shortly
+                                <p className="text-gray-500 dark:text-gray-400 text-[11px] sm:text-xs md:text-base">
+                                    Provide your details to get started with our expert advisors.
                                 </p>
+                            </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-4">
-                                    {/* Name Row */}
-                                    <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                name="firstName"
-                                                placeholder="First Name*"
-                                                required
-                                                value={formData.firstName}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all text-sm"
-                                            />
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="text"
-                                                name="lastName"
-                                                placeholder="Last Name*"
-                                                required
-                                                value={formData.lastName}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all text-sm"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Email */}
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Email Address*"
-                                        required
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all text-sm"
-                                    />
-
-                                    {/* Phone */}
-                                    <div className="flex items-stretch border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] focus-within:ring-2 focus-within:ring-brand-green focus-within:border-transparent transition-all overflow-hidden group">
-                                        <div className="relative border-r border-gray-300 dark:border-gray-600">
-                                            <select
-                                                name="countryCode"
-                                                value={formData.countryCode}
-                                                onChange={handleChange}
-                                                className="h-full pl-3 pr-8 py-3 bg-transparent text-gray-900 dark:text-white text-sm focus:outline-none appearance-none cursor-pointer"
-                                            >
-                                                {countryCodes.map(c => (
-                                                    <option key={c.label} value={c.code} className="dark:bg-[#0a0a0a]">{c.label.split(' ')[0]} {c.code}</option>
-                                                ))}
-                                            </select>
-                                            <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                                            </div>
-                                        </div>
+                            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
+                                {/* Name Row */}
+                                <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">First Name</label>
                                         <input
-                                            type="tel"
-                                            name="phone"
-                                            placeholder="Phone Number*"
+                                            type="text"
+                                            name="firstName"
+                                            placeholder="John"
                                             required
-                                            value={formData.phone}
+                                            value={formData.firstName}
                                             onChange={handleChange}
-                                            className="flex-1 px-4 py-3 bg-transparent text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none text-sm"
+                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
                                         />
                                     </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            placeholder="Doe"
+                                            required
+                                            value={formData.lastName}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
+                                        />
+                                    </div>
+                                </div>
 
-                                    {/* Message */}
-                                    <textarea
-                                        name="message"
-                                        placeholder="Your Message (optional)"
-                                        rows={3}
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all text-sm resize-none"
-                                    />
-
-                                    {/* Error Message */}
-                                    {error && (
-                                        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm">
-                                            {error}
+                                {/* Email & Phone Row */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="john@example.com"
+                                            required
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
+                                        <div className="flex items-stretch border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] focus-within:ring-2 focus-within:ring-brand-green/20 focus-within:border-brand-green transition-all overflow-hidden">
+                                            <div className="relative border-r border-gray-100 dark:border-white/5">
+                                                <select
+                                                    name="countryCode"
+                                                    value={formData.countryCode}
+                                                    onChange={handleChange}
+                                                    className="h-full pl-2 pr-6 md:pl-4 md:pr-10 py-2 md:py-3.5 bg-transparent text-gray-900 dark:text-white text-[10px] md:text-sm focus:outline-none appearance-none cursor-pointer"
+                                                >
+                                                    {countryCodes.map(c => (
+                                                        <option key={c.code} value={c.code} className="dark:bg-[#151515]">{c.label.split(' ')[0]} {c.code}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                placeholder="000 000 0000"
+                                                required
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                                className="flex-1 px-4 py-2 md:py-3.5 bg-transparent text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none"
+                                            />
                                         </div>
-                                    )}
+                                    </div>
+                                </div>
 
-                                    {/* Submit Button */}
+                                {/* Business Type - Now Full Width on mobile row */}
+                                <div className="grid grid-cols-1 gap-3 md:gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Business Type</label>
+                                        <select
+                                            name="businessType"
+                                            required
+                                            value={formData.businessType}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
+                                        >
+                                            <option value="" disabled>Select Type</option>
+                                            {['Manufacturing', 'Retail', 'IT', 'Healthcare', 'Logistics', 'Other'].map(type => (
+                                                <option key={type} value={type} className="dark:bg-[#151515]">{type}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {/* Service Chips - Replace Risk Concerns */}
+                                <div className="space-y-2">
+                                    <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Our Insurance Services</label>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {serviceOptions.map(service => (
+                                            <button
+                                                key={service}
+                                                type="button"
+                                                onClick={() => toggleService(service)}
+                                                className={`px-2.5 py-1 md:px-5 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold transition-all border ${formData.selectedServices.includes(service)
+                                                    ? 'bg-brand-green border-brand-green text-black'
+                                                    : 'bg-gray-50 dark:bg-white/5 border-gray-100 dark:border-white/5 text-gray-500 dark:text-gray-400'
+                                                    }`}
+                                            >
+                                                {service}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Submit Button */}
+                                <div className="pt-1 md:pt-4">
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full bg-brand-green text-black font-semibold py-3.5 rounded-xl hover:brightness-95 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        className="w-full bg-black dark:bg-brand-green text-white dark:text-black font-bold py-3 md:py-4 rounded-xl md:rounded-2xl hover:brightness-95 transition-all shadow-xl active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm md:text-lg group"
                                     >
-                                        {isSubmitting ? (
-                                            <>
-                                                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                                                Submitting...
-                                            </>
-                                        ) : (
-                                            <>
-                                                Get Free Consultation
-                                                <span className="text-lg">→</span>
-                                            </>
-                                        )}
+                                        {isSubmitting ? 'Submitting...' : 'Book Consultation'}
+                                        {!isSubmitting && <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />}
                                     </button>
-                                </form>
-                            </>
-                        )}
-                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    )}
                 </div>
             </div>
 
             <style jsx>{`
                 @keyframes modal-in {
-                    from {
-                        opacity: 0;
-                        transform: scale(0.95) translateY(10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: scale(1) translateY(0);
-                    }
+                    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+                    to { opacity: 1; transform: scale(1) translateY(0); }
                 }
                 @keyframes bounce-in {
-                    0% {
-                        transform: scale(0);
-                    }
-                    50% {
-                        transform: scale(1.2);
-                    }
-                    100% {
-                        transform: scale(1);
-                    }
+                    0% { transform: scale(0); }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
                 }
-                .animate-modal-in {
-                    animation: modal-in 0.3s ease-out forwards;
-                }
-                .animate-bounce-in {
-                    animation: bounce-in 0.4s ease-out forwards;
-                }
+                .animate-modal-in { animation: modal-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+                .animate-bounce-in { animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
             `}</style>
         </div>
     );
 }
+
+const countryCodes = [
+    { code: '+91', label: '🇮🇳 +91' },
+    { code: '+1', label: '🇺🇸 +1' },
+    { code: '+44', label: '🇬🇧 +44' },
+    { code: '+971', label: '🇦🇪 +971' },
+    { code: '+61', label: '🇦🇺 +61' },
+];

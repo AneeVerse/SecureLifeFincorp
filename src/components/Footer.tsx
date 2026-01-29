@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, PinIcon as Pinterest } from 'lucide-react';
 import { ContactModal } from './ContactModal';
 
 export function Footer() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Listen for global open-contact event
+    useEffect(() => {
+        const handleOpen = () => setIsModalOpen(true);
+        window.addEventListener('open-contact', handleOpen);
+        return () => window.removeEventListener('open-contact', handleOpen);
+    }, []);
 
     return (
         <>

@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { firstName, lastName, email, phone, message, subject, source } = body;
+        const { firstName, lastName, email, phone, message, subject, source, businessType, mainRiskConcern, selectedServices, annualTurnover, extraInfo } = body;
 
         // Validate required fields
         if (!firstName || !email || !phone) {
@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
         }
 
         // Create transporter using Gmail SMTP
-        // For production, use environment variables
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -27,7 +26,11 @@ export async function POST(request: NextRequest) {
         // Prepare email content
         const fullName = lastName ? `${firstName} ${lastName}` : firstName;
         const emailSubject = subject || 'New Inquiry from SecureLife Fincorp Website';
-        const formSource = source === 'hero' ? 'Hero Modal Form' : 'Contact Page';
+        const formSource = source === 'hero' ? 'Hero Modal Form' : (source === 'high-intent-modal' ? 'High Intent Modal' : 'Contact Page');
+
+        // Handle Services / Risks
+        const services = selectedServices || mainRiskConcern;
+        const servicesDisplay = Array.isArray(services) ? services.join(', ') : (services || '');
 
         const htmlContent = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -56,10 +59,22 @@ export async function POST(request: NextRequest) {
                                 <a href="tel:${phone}" style="color: #00D26A;">${phone}</a>
                             </td>
                         </tr>
-                        ${subject ? `
+                        ${businessType ? `
                         <tr>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #666;">Subject:</td>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">${subject}</td>
+                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #666;">Business Type:</td>
+                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">${businessType}</td>
+                        </tr>
+                        ` : ''}
+                        ${servicesDisplay ? `
+                        <tr>
+                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #666;">Interested Services:</td>
+                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">${servicesDisplay}</td>
+                        </tr>
+                        ` : ''}
+                        ${annualTurnover ? `
+                        <tr>
+                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #666;">Turnover:</td>
+                            <td style="padding: 10px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">${annualTurnover}</td>
                         </tr>
                         ` : ''}
                     </table>
@@ -70,6 +85,12 @@ export async function POST(request: NextRequest) {
                         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee; color: #555; line-height: 1.6;">
                             ${message.replace(/\n/g, '<br>')}
                         </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${extraInfo ? `
+                    <div style="margin-top: 15px; font-size: 12px; color: #888;">
+                        <strong>Audit Info:</strong> ${extraInfo}
                     </div>
                     ` : ''}
                 </div>
@@ -87,7 +108,7 @@ export async function POST(request: NextRequest) {
             from: `"SecureLife Fincorp" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_RECEIVER,
             replyTo: email,
-            subject: `New Lead: ${emailSubject}`,
+            subject: `New Lead: ${fullName} (${servicesDisplay.split(',')[0] || 'Inquiry'})`,
             html: htmlContent,
         });
 
@@ -104,60 +125,41 @@ export async function POST(request: NextRequest) {
                     email: email,
                     phone: phone,
                     message: message || '',
-                    extraInfo: `Subject: ${subject || 'General'}`
+                    extraInfo: extraInfo || `Services: ${servicesDisplay}`,
+                    businessType: businessType || '',
+                    services: servicesDisplay,
+                    turnover: annualTurnover || ''
                 }),
             }).then(res => res.json())
                 .catch(err => console.error('Google Sheets Error:', err));
         }
 
         // Send confirmation to Customer
-        const customerHtmlContent = `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 16px;">
-                <div style="background: linear-gradient(135deg, #00D26A 0%, #00B85F 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
-                    <h1 style="color: #000; margin: 0; font-size: 24px;">Thank You, ${firstName}!</h1>
-                </div>
-                
-                <div style="padding: 30px; color: #333; line-height: 1.6;">
-                    <p>We've received your inquiry regarding <strong>${subject || 'Insurance Services'}</strong>.</p>
-                    <p>Our team of experts is reviewing your details and will get back to you shortly. Here is a summary of what you shared:</p>
-                    
-                    <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                        <p style="margin: 5px 0;"><strong>Name:</strong> ${fullName}</p>
-                        <p style="margin: 5px 0;"><strong>Phone:</strong> ${phone}</p>
-                        <p style="margin: 5px 0;"><strong>Message:</strong> ${message || 'No message provided'}</p>
-                    </div>
-
-                    <p>If you have any urgent questions, feel free to reply to this email.</p>
-                    
-                    <p style="margin-top: 30px;">Best Regards,<br><strong>SecureLife Fincorp Team</strong></p>
-                </div>
-                
-                <div style="background: #0a0a0a; padding: 20px; border-radius: 0 0 12px 12px; text-align: center;">
-                    <p style="color: #666; margin: 0; font-size: 12px;">© ${new Date().getFullYear()} SecureLife Fincorp. All rights reserved.</p>
-                </div>
-            </div>
-        `;
-
         const customerMailPromise = transporter.sendMail({
             from: `"SecureLife Fincorp" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: `We've received your request - SecureLife Fincorp`,
-            html: customerHtmlContent,
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 16px;">
+                    <div style="background: linear-gradient(135deg, #00D26A 0%, #00B85F 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
+                        <h1 style="color: #000; margin: 0; font-size: 24px;">Thank You, ${firstName}!</h1>
+                    </div>
+                    <div style="padding: 30px; color: #333; line-height: 1.6;">
+                        <p>We've received your inquiry regarding our <strong>Insurance Solutions (Fire, Health, Cyber, etc.)</strong>.</p>
+                        <p>Our team of experts is reviewing your selected services and will get back to you shortly.</p>
+                        <p style="margin-top: 30px;">Best Regards,<br><strong>SecureLife Fincorp Team</strong></p>
+                    </div>
+                </div>
+            `,
         });
 
-        // Wait for all tasks (Emails + Sheets) to complete
+        // Wait for all tasks to complete
         await Promise.all([ownerMailPromise, customerMailPromise, sheetsPromise]);
 
-        return NextResponse.json(
-            { success: true, message: 'Form submitted successfully' },
-            { status: 200 }
-        );
+        return NextResponse.json({ success: true }, { status: 200 });
 
     } catch (error) {
         console.error('Error sending email:', error);
-        return NextResponse.json(
-            { error: 'Failed to send email' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }

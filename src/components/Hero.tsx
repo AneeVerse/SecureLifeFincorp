@@ -1,20 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
-import { ContactModal } from './ContactModal';
 
 export function Hero() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // Listen for global open-contact event
-    useState(() => {
-        if (typeof window !== 'undefined') {
-            const handleOpen = () => setIsModalOpen(true);
-            window.addEventListener('open-contact', handleOpen);
-            return () => window.removeEventListener('open-contact', handleOpen);
-        }
-    });
+    // Contact modal is now handled globally in the Footer/Layout via 'open-contact' event
 
     return (
         <>
@@ -46,14 +35,14 @@ export function Hero() {
 
                             <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-2 sm:gap-3 md:gap-5">
                                 <button
-                                    onClick={() => setIsModalOpen(true)}
+                                    onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                     className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95"
                                     style={{ padding: 'clamp(0.5rem, 1.2vh, 1.125rem) clamp(1.25rem, 4vw, 2.25rem)', fontSize: 'clamp(0.7rem, 2vw, 1.125rem)' }}
                                 >
                                     Get insurance
                                 </button>
                                 <button
-                                    onClick={() => setIsModalOpen(true)}
+                                    onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                     className="bg-transparent text-black border border-black rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-black/5 hover:-translate-y-0.5 active:scale-95"
                                     style={{ padding: 'clamp(0.5rem, 1.2vh, 1.125rem) clamp(1.25rem, 4vw, 2.25rem)', fontSize: 'clamp(0.7rem, 2vw, 1.125rem)' }}
                                 >
@@ -81,8 +70,7 @@ export function Hero() {
                 </div>
             </section>
 
-            {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            {/* Contact Modal is handled globally */}
         </>
     );
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 const expertiseItems = [
     {
@@ -19,6 +22,22 @@ const expertiseItems = [
 ];
 
 export function Expertise() {
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 80;
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <section className="w-full py-24 bg-white dark:bg-[#0a0a0a] transition-colors duration-300">
             <div className="max-w-[1250px] mx-auto px-5 grid md:grid-cols-2 gap-16 items-start">
@@ -36,11 +55,12 @@ export function Expertise() {
                         </h2>
                     </div>
 
-                    <Link href="/services">
-                        <button className="bg-black text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-brand-green hover:text-black transition-all duration-300 transform hover:-translate-y-1">
-                            View All Offerings
-                        </button>
-                    </Link>
+                    <button
+                        onClick={() => scrollToSection('our-solutions')}
+                        className="bg-black text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-brand-green hover:text-black transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                        View All Offerings
+                    </button>
                 </div>
 
                 {/* Right Side: List Items */}
