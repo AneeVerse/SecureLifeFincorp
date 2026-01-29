@@ -56,11 +56,11 @@ export function Hero() {
 
     return (
         <section
-            className="w-full min-h-screen flex items-center justify-center p-4 sm:p-5 pt-[80px] md:pt-[90px] pb-4 sm:pb-5 bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
+            className="w-full h-[100dvh] flex items-center justify-center p-3 sm:p-5 pt-[75px] md:pt-[90px] pb-3 sm:pb-5 bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
         >
-            <div className="w-full max-w-[1400px] relative flex-1 flex items-stretch">
+            <div className="w-full max-w-[1400px] h-full relative flex flex-col items-stretch">
                 <div
-                    className="w-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-5 sm:px-6 md:px-20 py-16 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-10"
+                    className="w-full h-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-4 sm:px-6 md:px-20 py-8 sm:py-12 md:py-20 flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6 lg:gap-10"
                 >
                     {/* Left Content - Original Style */}
                     <div className="max-w-[650px] z-10 text-center md:text-left relative flex-shrink-0">
@@ -72,21 +72,21 @@ export function Hero() {
                         </h1>
                         <p
                             className="leading-relaxed text-black/80 max-w-[350px] sm:max-w-[500px] mx-auto md:mx-0"
-                            style={{ fontSize: 'clamp(0.7rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1.5vh, 2.5rem)' }}
+                            style={{ fontSize: 'clamp(0.7rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1vh, 2rem)' }}
                         >
                             Customized strategies to help you secure financial stability, protect your assets, and grow your wealth.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-2 sm:gap-3 md:gap-5">
+                        <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-2.5 sm:gap-3 md:gap-5">
                             <button
                                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-                                className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95 px-8 py-3.5"
+                                className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95 px-6 py-3 sm:px-8 sm:py-3.5 text-sm sm:text-base"
                             >
                                 Get insurance
                             </button>
                             <button
                                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-                                className="bg-transparent text-black border border-black rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-black/5 hover:-translate-y-0.5 active:scale-95 px-8 py-3.5"
+                                className="bg-transparent text-black border border-black rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-black/5 hover:-translate-y-0.5 active:scale-95 px-6 py-3 sm:px-8 sm:py-3.5 text-sm sm:text-base"
                             >
                                 Contact us
                             </button>
@@ -94,14 +94,14 @@ export function Hero() {
                     </div>
 
                     {/* Right Content - Form in project theme (Black) */}
-                    <div className="z-20 w-full max-w-[440px] relative group">
-                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
-                            <div className="mb-4 md:mb-6">
-                                <h3 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+                    <div className="z-20 w-full max-w-[440px] relative group shrink-0">
+                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 sm:p-5 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
+                            <div className="mb-3 md:mb-6">
+                                <h3 className="text-lg md:text-2xl font-bold text-white flex items-center gap-2">
                                     Book Free Consultation
                                     <div className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></div>
                                 </h3>
-                                <p className="text-gray-400 text-xs md:text-sm mt-1 uppercase tracking-widest font-bold">Secure your future today</p>
+                                <p className="text-gray-400 text-[10px] md:text-sm mt-0.5 md:mt-1 uppercase tracking-widest font-bold">Secure your future today</p>
                             </div>
 
                             {isSubmitted ? (
