@@ -19,8 +19,8 @@ export async function POST(request: NextRequest) {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER || 'your-email@gmail.com',
-                pass: process.env.EMAIL_PASS || 'your-app-password',
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
             },
         });
 
@@ -82,17 +82,55 @@ export async function POST(request: NextRequest) {
             </div>
         `;
 
-        // Send email
-        await transporter.sendMail({
-            from: `"SecureLife Fincorp" <${process.env.EMAIL_USER || 'your-email@gmail.com'}>`,
-            to: process.env.EMAIL_TO || 'recipient@example.com',
+        // Send notification to Owner
+        const ownerMailPromise = transporter.sendMail({
+            from: `"SecureLife Fincorp" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_RECEIVER,
             replyTo: email,
-            subject: emailSubject,
+            subject: `New Lead: ${emailSubject}`,
             html: htmlContent,
         });
 
+        // Send confirmation to Customer
+        const customerHtmlContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 16px;">
+                <div style="background: linear-gradient(135deg, #00D26A 0%, #00B85F 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
+                    <h1 style="color: #000; margin: 0; font-size: 24px;">Thank You, ${firstName}!</h1>
+                </div>
+                
+                <div style="padding: 30px; color: #333; line-height: 1.6;">
+                    <p>We've received your inquiry regarding <strong>${subject || 'Insurance Services'}</strong>.</p>
+                    <p>Our team of experts is reviewing your details and will get back to you shortly. Here is a summary of what you shared:</p>
+                    
+                    <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <p style="margin: 5px 0;"><strong>Name:</strong> ${fullName}</p>
+                        <p style="margin: 5px 0;"><strong>Phone:</strong> ${phone}</p>
+                        <p style="margin: 5px 0;"><strong>Message:</strong> ${message || 'No message provided'}</p>
+                    </div>
+
+                    <p>If you have any urgent questions, feel free to reply to this email.</p>
+                    
+                    <p style="margin-top: 30px;">Best Regards,<br><strong>SecureLife Fincorp Team</strong></p>
+                </div>
+                
+                <div style="background: #0a0a0a; padding: 20px; border-radius: 0 0 12px 12px; text-align: center;">
+                    <p style="color: #666; margin: 0; font-size: 12px;">© ${new Date().getFullYear()} SecureLife Fincorp. All rights reserved.</p>
+                </div>
+            </div>
+        `;
+
+        const customerMailPromise = transporter.sendMail({
+            from: `"SecureLife Fincorp" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: `We've received your request - SecureLife Fincorp`,
+            html: customerHtmlContent,
+        });
+
+        // Wait for both emails to be sent
+        await Promise.all([ownerMailPromise, customerMailPromise]);
+
         return NextResponse.json(
-            { success: true, message: 'Email sent successfully' },
+            { success: true, message: 'Emails sent successfully' },
             { status: 200 }
         );
 
