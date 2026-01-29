@@ -13,6 +13,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         firstName: '',
         lastName: '',
         email: '',
+        countryCode: '+91',
         phone: '',
         message: ''
     });
@@ -54,7 +55,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    phone: `+91 ${formData.phone}`,
+                    phone: `${formData.countryCode} ${formData.phone}`,
                     source: 'hero'
                 }),
             });
@@ -70,7 +71,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             // Reset after showing success
             setTimeout(() => {
                 setIsSubmitted(false);
-                setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+                setFormData({ firstName: '', lastName: '', email: '', countryCode: '+91', phone: '', message: '' });
                 onClose();
             }, 2500);
 
@@ -81,12 +82,35 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData(prev => ({
             ...prev,
             [e.target.name]: e.target.value
         }));
     };
+
+    const countryCodes = [
+        { code: '+91', label: '🇮🇳 India (+91)' },
+        { code: '+1', label: '🇺🇸 USA (+1)' },
+        { code: '+44', label: '🇬🇧 UK (+44)' },
+        { code: '+971', label: '🇦🇪 UAE (+971)' },
+        { code: '+61', label: '🇦🇺 Australia (+61)' },
+        { code: '+1', label: '🇨🇦 Canada (+1)' },
+        { code: '+65', label: '🇸🇬 Singapore (+65)' },
+        { code: '+49', label: '🇩🇪 Germany (+49)' },
+        { code: '+33', label: '🇫🇷 France (+33)' },
+        { code: '+81', label: '🇯🇵 Japan (+81)' },
+        { code: '+86', label: '🇨🇳 China (+86)' },
+        { code: '+7', label: '🇷🇺 Russia (+7)' },
+        { code: '+55', label: '🇧🇷 Brazil (+55)' },
+        { code: '+27', label: '🇿🇦 South Africa (+27)' },
+        { code: '+966', label: '🇸🇦 Saudi Arabia (+966)' },
+        { code: '+60', label: '🇲🇾 Malaysia (+60)' },
+        { code: '+62', label: '🇮🇩 Indonesia (+62)' },
+        { code: '+66', label: '🇹🇭 Thailand (+66)' },
+        { code: '+84', label: '🇻🇳 Vietnam (+84)' },
+        { code: '+82', label: '🇰🇷 South Korea (+82)' },
+    ];
 
     if (!isOpen) return null;
 
@@ -213,10 +237,21 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                     />
 
                                     {/* Phone */}
-                                    <div className="flex gap-2">
-                                        <div className="flex items-center px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-[#0a0a0a] text-gray-600 dark:text-gray-400 text-sm">
-                                            <span className="text-lg mr-1">🇮🇳</span>
-                                            <span>+91</span>
+                                    <div className="flex items-stretch border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] focus-within:ring-2 focus-within:ring-brand-green focus-within:border-transparent transition-all overflow-hidden group">
+                                        <div className="relative border-r border-gray-300 dark:border-gray-600">
+                                            <select
+                                                name="countryCode"
+                                                value={formData.countryCode}
+                                                onChange={handleChange}
+                                                className="h-full pl-3 pr-8 py-3 bg-transparent text-gray-900 dark:text-white text-sm focus:outline-none appearance-none cursor-pointer"
+                                            >
+                                                {countryCodes.map(c => (
+                                                    <option key={c.label} value={c.code} className="dark:bg-[#0a0a0a]">{c.label.split(' ')[0]} {c.code}</option>
+                                                ))}
+                                            </select>
+                                            <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </div>
                                         </div>
                                         <input
                                             type="tel"
@@ -225,7 +260,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             required
                                             value={formData.phone}
                                             onChange={handleChange}
-                                            className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all text-sm"
+                                            className="flex-1 px-4 py-3 bg-transparent text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none text-sm"
                                         />
                                     </div>
 

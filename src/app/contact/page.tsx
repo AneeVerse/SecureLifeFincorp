@@ -9,6 +9,7 @@ export default function ContactPage() {
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
+        countryCode: '+91',
         phone: '',
         subject: 'General Inquiry',
         message: ''
@@ -38,7 +39,7 @@ export default function ContactPage() {
                 body: JSON.stringify({
                     firstName: formData.fullName,
                     email: formData.email,
-                    phone: formData.phone,
+                    phone: `${formData.countryCode} ${formData.phone}`,
                     subject: formData.subject,
                     message: formData.message,
                     source: 'contact'
@@ -56,7 +57,7 @@ export default function ContactPage() {
             // Reset form after showing success
             setTimeout(() => {
                 setIsSubmitted(false);
-                setFormData({ fullName: '', email: '', phone: '', subject: 'General Inquiry', message: '' });
+                setFormData({ fullName: '', email: '', countryCode: '+91', phone: '', subject: 'General Inquiry', message: '' });
             }, 3000);
 
         } catch (err) {
@@ -65,6 +66,29 @@ export default function ContactPage() {
             setIsSubmitting(false);
         }
     };
+
+    const countryCodes = [
+        { code: '+91', label: '🇮🇳 India (+91)' },
+        { code: '+1', label: '🇺🇸 USA (+1)' },
+        { code: '+44', label: '🇬🇧 UK (+44)' },
+        { code: '+971', label: '🇦🇪 UAE (+971)' },
+        { code: '+61', label: '🇦🇺 Australia (+61)' },
+        { code: '+1', label: '🇨🇦 Canada (+1)' },
+        { code: '+65', label: '🇸🇬 Singapore (+65)' },
+        { code: '+49', label: '🇩🇪 Germany (+49)' },
+        { code: '+33', label: '🇫🇷 France (+33)' },
+        { code: '+81', label: '🇯🇵 Japan (+81)' },
+        { code: '+86', label: '🇨🇳 China (+86)' },
+        { code: '+7', label: '🇷🇺 Russia (+7)' },
+        { code: '+55', label: '🇧🇷 Brazil (+55)' },
+        { code: '+27', label: '🇿🇦 South Africa (+27)' },
+        { code: '+966', label: '🇸🇦 Saudi Arabia (+966)' },
+        { code: '+60', label: '🇲🇾 Malaysia (+60)' },
+        { code: '+62', label: '🇮🇩 Indonesia (+62)' },
+        { code: '+66', label: '🇹🇭 Thailand (+66)' },
+        { code: '+84', label: '🇻🇳 Vietnam (+84)' },
+        { code: '+82', label: '🇰🇷 South Korea (+82)' },
+    ];
 
     return (
         <main className="bg-white dark:bg-black min-h-screen transition-colors duration-300 font-outfit">
@@ -140,29 +164,51 @@ export default function ContactPage() {
                                     <div className="grid md:grid-cols-2 gap-8">
                                         <div className="space-y-2">
                                             <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">Phone Number</label>
-                                            <input
-                                                type="tel"
-                                                name="phone"
-                                                placeholder="+91 0000 000 000"
-                                                required
-                                                value={formData.phone}
-                                                onChange={handleChange}
-                                                className="w-full bg-neutral-50 dark:bg-[#151515] border border-neutral-100 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-green transition-colors dark:text-white"
-                                            />
+                                            <div className="flex items-stretch bg-neutral-50 dark:bg-[#151515] border border-neutral-100 dark:border-white/10 rounded-2xl focus-within:border-brand-green transition-colors overflow-hidden">
+                                                <div className="relative border-r border-neutral-100 dark:border-white/10">
+                                                    <select
+                                                        name="countryCode"
+                                                        value={formData.countryCode}
+                                                        onChange={handleChange}
+                                                        className="h-full pl-4 pr-10 py-4 bg-transparent text-black dark:text-white text-sm focus:outline-none appearance-none cursor-pointer"
+                                                    >
+                                                        {countryCodes.map(c => (
+                                                            <option key={c.label} value={c.code} className="dark:bg-[#151515]">{c.label.split(' ')[0]} {c.code}</option>
+                                                        ))}
+                                                    </select>
+                                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                                    </div>
+                                                </div>
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    placeholder="0000 000 000"
+                                                    required
+                                                    value={formData.phone}
+                                                    onChange={handleChange}
+                                                    className="flex-1 bg-transparent px-6 py-4 focus:outline-none dark:text-white"
+                                                />
+                                            </div>
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-sm font-bold uppercase tracking-widest text-black dark:text-white ml-1">Subject</label>
-                                            <select
-                                                name="subject"
-                                                value={formData.subject}
-                                                onChange={handleChange}
-                                                className="w-full bg-neutral-50 dark:bg-[#151515] border border-neutral-100 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-green transition-colors appearance-none dark:text-white"
-                                            >
-                                                <option>General Inquiry</option>
-                                                <option>Financial Planning</option>
-                                                <option>Insurance Quote</option>
-                                                <option>Tax Consulting</option>
-                                            </select>
+                                            <div className="relative">
+                                                <select
+                                                    name="subject"
+                                                    value={formData.subject}
+                                                    onChange={handleChange}
+                                                    className="w-full bg-neutral-50 dark:bg-[#151515] border border-neutral-100 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-green transition-colors appearance-none dark:text-white cursor-pointer"
+                                                >
+                                                    <option>General Inquiry</option>
+                                                    <option>Financial Planning</option>
+                                                    <option>Insurance Quote</option>
+                                                    <option>Tax Consulting</option>
+                                                </select>
+                                                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 

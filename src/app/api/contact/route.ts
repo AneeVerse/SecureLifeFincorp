@@ -91,6 +91,25 @@ export async function POST(request: NextRequest) {
             html: htmlContent,
         });
 
+        // Send to Google Sheets
+        let sheetsPromise: Promise<any> = Promise.resolve();
+        if (process.env.GOOGLE_APPS_SCRIPT_URL) {
+            sheetsPromise = fetch(process.env.GOOGLE_APPS_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    source: formSource,
+                    formType: 'Website Inquiry',
+                    name: fullName,
+                    email: email,
+                    phone: phone,
+                    message: message || '',
+                    extraInfo: `Subject: ${subject || 'General'}`
+                }),
+            }).then(res => res.json())
+                .catch(err => console.error('Google Sheets Error:', err));
+        }
+
         // Send confirmation to Customer
         const customerHtmlContent = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 16px;">
@@ -126,11 +145,11 @@ export async function POST(request: NextRequest) {
             html: customerHtmlContent,
         });
 
-        // Wait for both emails to be sent
-        await Promise.all([ownerMailPromise, customerMailPromise]);
+        // Wait for all tasks (Emails + Sheets) to complete
+        await Promise.all([ownerMailPromise, customerMailPromise, sheetsPromise]);
 
         return NextResponse.json(
-            { success: true, message: 'Emails sent successfully' },
+            { success: true, message: 'Form submitted successfully' },
             { status: 200 }
         );
 
