@@ -256,17 +256,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                     <div className="space-y-1">
                                         <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
                                         <div className="flex items-stretch border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] focus-within:ring-2 focus-within:ring-brand-green/20 focus-within:border-brand-green transition-all overflow-hidden">
-                                            <div className="relative border-r border-gray-100 dark:border-white/5">
-                                                <select
-                                                    name="countryCode"
-                                                    value={formData.countryCode}
-                                                    onChange={handleChange}
-                                                    className="h-full pl-2 pr-6 md:pl-4 md:pr-10 py-2 md:py-3.5 bg-transparent text-gray-900 dark:text-white text-[10px] md:text-sm focus:outline-none appearance-none cursor-pointer"
-                                                >
-                                                    {countryCodes.map(c => (
-                                                        <option key={c.code} value={c.code} className="dark:bg-[#151515]">{c.label.split(' ')[0]} {c.code}</option>
-                                                    ))}
-                                                </select>
+                                            <div className="flex items-center border-r border-gray-100 dark:border-white/5">
+                                                <span className="px-4 text-gray-900 dark:text-white text-xs md:text-sm font-medium">+91</span>
                                             </div>
                                             <input
                                                 type="tel"

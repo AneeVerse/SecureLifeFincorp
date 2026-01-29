@@ -1,76 +1,204 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
 export function Hero() {
-    // Contact modal is now handled globally in the Footer/Layout via 'open-contact' event
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        service: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const serviceOptions = [
+        'Fire Insurance', 'Theft Insurance', 'Cyber Insurance', 'Health Insurance',
+        'Personal Insurance', 'Financial Insurance', 'Machinery Insurance', 'Employee Insurance'
+    ];
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    phone: formData.phone,
+                    extraInfo: `Service: ${formData.service}`,
+                    source: 'hero-direct-form'
+                }),
+            });
+            if (response.ok) {
+                setIsSubmitted(true);
+                setTimeout(() => {
+                    setIsSubmitted(false);
+                    setFormData({ firstName: '', lastName: '', email: '', phone: '', service: '' });
+                }, 3000);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
-        <>
-            <section
-                className="w-full flex items-center justify-center p-4 sm:p-5 pt-[80px] md:pt-[100px] bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
-                style={{
-                    height: 'clamp(550px, calc(100svh - 20px), 100svh)',
-                    maxHeight: '100svh'
-                }}
-            >
-                <div className="w-full max-w-[1400px] relative h-full">
-                    <div
-                        className="w-full h-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-5 sm:px-6 md:px-20 pt-4 md:pt-20 pb-2 md:pb-0 flex flex-col items-center md:items-start justify-center md:justify-start"
-                    >
-                        {/* Text Content - Vertically centered on mobile */}
-                        <div className="max-w-[700px] z-10 text-center md:text-left relative flex-shrink-0">
-                            <h1
-                                className="font-bold leading-[1.15] text-black"
-                                style={{ fontSize: 'clamp(1.4rem, 5vw, 4.5rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
-                            >
-                                A perfect <span className="bg-white text-black px-2 sm:px-3 md:px-4 rounded-lg inline-block">insurance</span> plan created just for you.
-                            </h1>
-                            <p
-                                className="leading-relaxed text-black/80 max-w-[350px] sm:max-w-[500px] mx-auto md:mx-0"
-                                style={{ fontSize: 'clamp(0.7rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1.5vh, 2.5rem)' }}
-                            >
-                                Customized strategies to help you secure financial stability, protect your assets, and grow your wealth.
-                            </p>
+        <section
+            className="w-full flex items-center justify-center p-4 sm:p-5 pt-[80px] md:pt-[100px] bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
+            style={{
+                height: 'clamp(700px, calc(100svh - 20px), 110svh)',
+                maxHeight: '1200px'
+            }}
+        >
+            <div className="w-full max-w-[1400px] relative h-full">
+                <div
+                    className="w-full h-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-5 sm:px-6 md:px-20 py-12 flex flex-col lg:flex-row items-center justify-between gap-10"
+                >
+                    {/* Left Content - Original Style */}
+                    <div className="max-w-[650px] z-10 text-center md:text-left relative flex-shrink-0">
+                        <h1
+                            className="font-bold leading-[1.15] text-black"
+                            style={{ fontSize: 'clamp(1.4rem, 5vw, 4.2rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
+                        >
+                            A perfect <span className="bg-white text-black px-2 sm:px-3 md:px-4 rounded-lg inline-block">insurance</span> plan created just for you.
+                        </h1>
+                        <p
+                            className="leading-relaxed text-black/80 max-w-[350px] sm:max-w-[500px] mx-auto md:mx-0"
+                            style={{ fontSize: 'clamp(0.7rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1.5vh, 2.5rem)' }}
+                        >
+                            Customized strategies to help you secure financial stability, protect your assets, and grow your wealth.
+                        </p>
 
-                            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-2 sm:gap-3 md:gap-5">
-                                <button
-                                    onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-                                    className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95"
-                                    style={{ padding: 'clamp(0.5rem, 1.2vh, 1.125rem) clamp(1.25rem, 4vw, 2.25rem)', fontSize: 'clamp(0.7rem, 2vw, 1.125rem)' }}
-                                >
-                                    Get insurance
-                                </button>
-                                <button
-                                    onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-                                    className="bg-transparent text-black border border-black rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-black/5 hover:-translate-y-0.5 active:scale-95"
-                                    style={{ padding: 'clamp(0.5rem, 1.2vh, 1.125rem) clamp(1.25rem, 4vw, 2.25rem)', fontSize: 'clamp(0.7rem, 2vw, 1.125rem)' }}
-                                >
-                                    Contact us
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Hero Image - Fixed at bottom */}
-                        <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center md:justify-end md:right-10 lg:right-20 pointer-events-none">
-                            <Image
-                                src="/images/hero-bg.png"
-                                alt="Insurance Illustration"
-                                width={1000}
-                                height={580}
-                                priority
-                                className="w-auto object-contain object-bottom"
-                                style={{
-                                    height: 'clamp(140px, 32vh, 650px)',
-                                    maxHeight: '45%'
-                                }}
-                            />
+                        <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-2 sm:gap-3 md:gap-5">
+                            <button
+                                onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                                className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95 px-8 py-3.5"
+                            >
+                                Get insurance
+                            </button>
+                            <button
+                                onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                                className="bg-transparent text-black border border-black rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-black/5 hover:-translate-y-0.5 active:scale-95 px-8 py-3.5"
+                            >
+                                Contact us
+                            </button>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            {/* Contact Modal is handled globally */}
-        </>
+                    {/* Right Content - Form in project theme (Black) */}
+                    <div className="z-20 w-full max-w-[440px] relative group">
+                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
+                            <div className="mb-4 md:mb-6">
+                                <h3 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+                                    Book Free Consultation
+                                    <div className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></div>
+                                </h3>
+                                <p className="text-gray-400 text-xs md:text-sm mt-1 uppercase tracking-widest font-bold">Secure your future today</p>
+                            </div>
+
+                            {isSubmitted ? (
+                                <div className="py-16 text-center space-y-4">
+                                    <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto text-black shadow-[0_0_20px_rgba(0,210,106,0.4)]">
+                                        <CheckCircle size={32} />
+                                    </div>
+                                    <h4 className="text-xl font-bold text-white tracking-tight">Request Received!</h4>
+                                    <p className="text-gray-400 text-sm">We'll contact you within 15 minutes.</p>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-2 md:space-y-3.5">
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            placeholder="First Name*"
+                                            required
+                                            value={formData.firstName}
+                                            onChange={handleChange}
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            placeholder="Last Name*"
+                                            required
+                                            value={formData.lastName}
+                                            onChange={handleChange}
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                        />
+                                    </div>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        placeholder="Email Address*"
+                                        required
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                    />
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        placeholder="Phone Number*"
+                                        required
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                    />
+                                    <select
+                                        name="service"
+                                        required
+                                        value={formData.service}
+                                        onChange={handleChange}
+                                        className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white cursor-pointer appearance-none"
+                                    >
+                                        <option value="" disabled className="bg-black text-gray-500">Service Required*</option>
+                                        {serviceOptions.map(opt => (
+                                            <option key={opt} value={opt} className="bg-black text-white">{opt}</option>
+                                        ))}
+                                    </select>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full bg-brand-green text-black font-bold py-2.5 md:py-4 rounded-xl shadow-[0_10px_30px_rgba(0,210,106,0.3)] hover:brightness-105 active:scale-[0.98] transition-all text-sm flex items-center justify-center gap-2 mt-1 md:mt-2 disabled:opacity-70"
+                                    >
+                                        {isSubmitting ? 'Sending Request...' : 'Get Consultation'}
+                                        {!isSubmitting && <ArrowRight size={16} />}
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Illustration - Original placement but reduced scale for space */}
+                    <div className="absolute bottom-0 left-[-5%] lg:left-[15%] pointer-events-none z-0">
+                        {/* <Image
+                            src="/images/hero-bg.png"
+                            alt="Insurance Illustration"
+                            width={1000}
+                            height={580}
+                            priority
+                            className="w-auto object-contain object-bottom opacity-10 xl:opacity-100"
+                            style={{
+                                height: 'clamp(180px, 32vh, 420px)',
+                                maxHeight: '45%'
+                            }}
+                        /> */}
+                    </div>
+                </div>
+            </div>
+        </section>
     );
 }
