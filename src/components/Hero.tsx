@@ -56,15 +56,11 @@ export function Hero() {
 
     return (
         <section
-            className="w-full flex items-center justify-center p-4 sm:p-5 pt-[80px] md:pt-[100px] bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
-            style={{
-                height: 'clamp(700px, calc(100svh - 20px), 110svh)',
-                maxHeight: '1200px'
-            }}
+            className="w-full min-h-screen flex items-center justify-center p-4 sm:p-5 pt-[80px] md:pt-[90px] pb-4 sm:pb-5 bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
         >
-            <div className="w-full max-w-[1400px] relative h-full">
+            <div className="w-full max-w-[1400px] relative flex-1 flex items-stretch">
                 <div
-                    className="w-full h-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-5 sm:px-6 md:px-20 py-12 flex flex-col lg:flex-row items-center justify-between gap-10"
+                    className="w-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-5 sm:px-6 md:px-20 py-16 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-10"
                 >
                     {/* Left Content - Original Style */}
                     <div className="max-w-[650px] z-10 text-center md:text-left relative flex-shrink-0">

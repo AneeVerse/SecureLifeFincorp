@@ -6,26 +6,27 @@ import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
     {
-        question: "How do I manage my finances effectively?",
-        answer: "Effective financial management starts with budgeting and tracking your expenses. Our advisors can help you create a personalized plan that balances your current needs with long-term goals."
+        question: "What types of business insurance do you offer?",
+        answer: "We offer comprehensive coverage including Fire, Theft, Cyber, Health, Personal, Financial, Machinery, and Employee insurance. Our one-stop solution protects your business, people, and profits under a single risk management strategy."
     },
     {
-        question: "How can I increase my wealth over time?",
-        answer: "Wealth building involves consistent saving and strategic investing. We focus on diversified portfolios and compound growth strategies tailored to your risk tolerance."
+        question: "How quickly can I get coverage for my business?",
+        answer: "We provide quick approval with policies issued within 24 hours. Our streamlined process requires minimal paperwork, and our team handles everything from documentation to policy issuance."
     },
     {
-        question: "How can I improve my credit score?",
-        answer: "Improving your credit score requires timely payments, reducing debt, and maintaining low credit utilization. We provide guidance on the steps needed to rebuild your credit health."
+        question: "What documents are required to get a quote?",
+        answer: "Basic requirements include your business registration, GST certificate, and details about your operations and assets. Our advisors will guide you through the exact requirements based on your industry and coverage needs."
     },
     {
-        question: "What are tax-efficient financial strategies?",
-        answer: "Tax efficiency means keeping more of what you earn. We utilize various investment vehicles and planning techniques to minimize your tax liability legally."
+        question: "Do you provide claims support?",
+        answer: "Yes, absolutely. Every client gets a dedicated relationship manager who provides end-to-end claims support. We have settled over ₹500 Crore in claims and pride ourselves on hassle-free claim processing."
     },
     {
-        question: "How can I optimize investment returns?",
-        answer: "Optimizing returns requires a balance of asset allocation, market analysis, and periodic rebalancing of your portfolio as market conditions change."
+        question: "Are there tax benefits for business insurance?",
+        answer: "Yes, business insurance premiums are tax-deductible under Section 37(1) of the Income Tax Act. This means you can reduce your taxable income while protecting your business assets and employees."
     }
 ];
+
 
 export function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
