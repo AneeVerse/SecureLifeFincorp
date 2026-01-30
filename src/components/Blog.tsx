@@ -8,19 +8,19 @@ const blogPosts = [
         category: "Fire Insurance",
         title: "Protect your business from fire hazards",
         description: "Learn how fire insurance safeguards your property and assets from unexpected fire-related damages.",
-        image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=800&auto=format&fit=crop",
+        image: "/images/service/fire.png",
     },
     {
         category: "Cyber Insurance",
         title: "Why cyber insurance is essential today",
         description: "Understand how cyber insurance protects your business from data breaches and digital threats.",
-        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
+        image: "/images/service/cyber.png",
     },
     {
         category: "Health Insurance",
         title: "Choosing the right health coverage",
         description: "A comprehensive guide to selecting health insurance plans that fit your family's needs.",
-        image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=800&auto=format&fit=crop",
+        image: "/images/service/health.png",
     }
 ];
 
