@@ -16,6 +16,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         countryCode: '+91',
         phone: '',
         businessType: '',
+        otherBusiness: '',
         selectedServices: [] as string[],
         message: ''
     });
@@ -50,15 +51,20 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         setError(null);
 
         try {
+            const finalBusinessType = formData.businessType === 'Other' ? formData.otherBusiness : formData.businessType;
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    ...formData,
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
                     phone: `${formData.countryCode} ${formData.phone}`,
-                    extraInfo: `Business: ${formData.businessType} | Services: ${formData.selectedServices.join(', ')}`,
+                    businessType: finalBusinessType,
+                    mainRiskConcern: formData.selectedServices,
+                    message: formData.message,
                     source: 'high-intent-modal'
                 }),
             });
@@ -81,6 +87,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     countryCode: '+91',
                     phone: '',
                     businessType: '',
+                    otherBusiness: '',
                     selectedServices: [],
                     message: ''
                 });
@@ -110,9 +117,10 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         }));
     };
 
+    const businessOptions = ['Manufacturing', 'Retail', 'IT', 'Other'];
     const serviceOptions = [
-        'Fire', 'Theft', 'Cyber', 'Health',
-        'Personal', 'Financial', 'Machinery', 'Employee'
+        'fire', 'theft', 'cyber', 'health',
+        'personal', 'financial', 'machinery', 'employe'
     ];
 
     if (!isOpen) return null;
@@ -214,11 +222,11 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 {/* Name Row */}
                                 <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">First Name</label>
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">FIRST NAME</label>
                                         <input
                                             type="text"
                                             name="firstName"
-                                            placeholder="John"
+                                            placeholder="first name"
                                             required
                                             value={formData.firstName}
                                             onChange={handleChange}
@@ -226,11 +234,11 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Last Name</label>
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">LAST NAME</label>
                                         <input
                                             type="text"
                                             name="lastName"
-                                            placeholder="Doe"
+                                            placeholder="last name"
                                             required
                                             value={formData.lastName}
                                             onChange={handleChange}
@@ -242,11 +250,11 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 {/* Email & Phone Row */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">EMAIL ADDRESS</label>
                                         <input
                                             type="email"
                                             name="email"
-                                            placeholder="john@example.com"
+                                            placeholder="email"
                                             required
                                             value={formData.email}
                                             onChange={handleChange}
@@ -254,7 +262,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">PHONE NUMBER</label>
                                         <div className="flex items-stretch border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] focus-within:ring-2 focus-within:ring-brand-green/20 focus-within:border-brand-green transition-all overflow-hidden">
                                             <div className="flex items-center border-r border-gray-100 dark:border-white/5">
                                                 <span className="px-4 text-gray-900 dark:text-white text-xs md:text-sm font-medium">+91</span>
@@ -262,7 +270,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             <input
                                                 type="tel"
                                                 name="phone"
-                                                placeholder="000 000 0000"
+                                                placeholder="phone"
                                                 required
                                                 value={formData.phone}
                                                 onChange={handleChange}
@@ -272,22 +280,36 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                     </div>
                                 </div>
 
-                                {/* Business Type - Now Full Width on mobile row */}
+                                {/* Business Type */}
                                 <div className="grid grid-cols-1 gap-3 md:gap-4">
-                                    <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Business Type</label>
-                                        <select
-                                            name="businessType"
-                                            required
-                                            value={formData.businessType}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
-                                        >
-                                            <option value="" disabled>Select Type</option>
-                                            {['Manufacturing', 'Retail', 'IT', 'Healthcare', 'Logistics', 'Other'].map(type => (
-                                                <option key={type} value={type} className="dark:bg-[#151515]">{type}</option>
-                                            ))}
-                                        </select>
+                                    <div className="space-y-2">
+                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">BUSINESS TYPE</label>
+                                        <div className="space-y-3">
+                                            <select
+                                                name="businessType"
+                                                required
+                                                value={formData.businessType}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
+                                            >
+                                                <option value="" disabled>Select Type</option>
+                                                {businessOptions.map(type => (
+                                                    <option key={type} value={type} className="dark:bg-[#151515]">{type}</option>
+                                                ))}
+                                            </select>
+
+                                            {formData.businessType === 'Other' && (
+                                                <input
+                                                    type="text"
+                                                    name="otherBusiness"
+                                                    placeholder="please specify business type"
+                                                    required
+                                                    value={formData.otherBusiness}
+                                                    onChange={handleChange}
+                                                    className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all animate-in fade-in slide-in-from-top-1 duration-200"
+                                                />
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
 

@@ -10,24 +10,37 @@ export function Hero() {
         lastName: '',
         email: '',
         phone: '',
-        service: ''
+        businessType: '',
+        otherBusiness: '',
+        riskConcerns: [] as string[]
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const serviceOptions = [
-        'Fire Insurance', 'Theft Insurance', 'Cyber Insurance', 'Health Insurance',
-        'Personal Insurance', 'Financial Insurance', 'Machinery Insurance', 'Employee Insurance'
+    const businessOptions = ['Manufacturing', 'Retail', 'IT', 'Other'];
+    const riskOptions = [
+        'fire', 'theft', 'cyber', 'health',
+        'personal', 'financial', 'machinery', 'employe'
     ];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
+    const handleCheckboxChange = (risk: string) => {
+        setFormData(prev => ({
+            ...prev,
+            riskConcerns: prev.riskConcerns.includes(risk)
+                ? prev.riskConcerns.filter(r => r !== risk)
+                : [...prev.riskConcerns, risk]
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
+            const finalBusinessType = formData.businessType === 'Other' ? formData.otherBusiness : formData.businessType;
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -36,7 +49,8 @@ export function Hero() {
                     lastName: formData.lastName,
                     email: formData.email,
                     phone: formData.phone,
-                    extraInfo: `Service: ${formData.service}`,
+                    businessType: finalBusinessType,
+                    mainRiskConcern: formData.riskConcerns,
                     source: 'hero-direct-form'
                 }),
             });
@@ -44,7 +58,7 @@ export function Hero() {
                 setIsSubmitted(true);
                 setTimeout(() => {
                     setIsSubmitted(false);
-                    setFormData({ firstName: '', lastName: '', email: '', phone: '', service: '' });
+                    setFormData({ firstName: '', lastName: '', email: '', phone: '', businessType: '', otherBusiness: '', riskConcerns: [] });
                 }, 3000);
             }
         } catch (err) {
@@ -95,13 +109,13 @@ export function Hero() {
 
                     {/* Right Content - Form in project theme (Black) */}
                     <div className="z-20 w-full max-w-[440px] relative group shrink-0">
-                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 sm:p-5 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
-                            <div className="mb-3 md:mb-6">
-                                <h3 className="text-lg md:text-2xl font-bold text-white flex items-center gap-2">
-                                    Book Free Consultation
+                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 sm:p-5 md:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
+                            <div className="mb-3 md:mb-5 text-center lg:text-left">
+                                <h3 className="text-lg md:text-2xl font-bold text-white flex items-center justify-center lg:justify-start gap-2">
+                                    Quick Quote
                                     <div className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></div>
                                 </h3>
-                                <p className="text-gray-400 text-[10px] md:text-sm mt-0.5 md:mt-1 uppercase tracking-widest font-bold">Secure your future today</p>
+                                <p className="text-gray-400 text-[10px] md:text-sm mt-0.5 md:mt-1 uppercase tracking-widest font-bold">Protect your business today</p>
                             </div>
 
                             {isSubmitted ? (
@@ -113,70 +127,120 @@ export function Hero() {
                                     <p className="text-gray-400 text-sm">We'll contact you within 15 minutes.</p>
                                 </div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="space-y-2 md:space-y-3.5">
-                                    <div className="grid grid-cols-2 gap-3">
+                                <form onSubmit={handleSubmit} className="space-y-2 md:space-y-3">
+                                    <div className="grid grid-cols-2 gap-2 md:gap-3">
                                         <input
                                             type="text"
                                             name="firstName"
-                                            placeholder="First Name*"
+                                            placeholder="first name"
                                             required
                                             value={formData.firstName}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
                                         />
                                         <input
                                             type="text"
                                             name="lastName"
-                                            placeholder="Last Name*"
+                                            placeholder="last name"
                                             required
                                             value={formData.lastName}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
                                         />
                                     </div>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Email Address*"
-                                        required
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
-                                    />
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        placeholder="Phone Number*"
-                                        required
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
-                                    />
-                                    <select
-                                        name="service"
-                                        required
-                                        value={formData.service}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white cursor-pointer appearance-none"
-                                    >
-                                        <option value="" disabled className="bg-black text-gray-500">Service Required*</option>
-                                        {serviceOptions.map(opt => (
-                                            <option key={opt} value={opt} className="bg-black text-white">{opt}</option>
-                                        ))}
-                                    </select>
+                                    <div className="grid grid-cols-2 gap-2 md:gap-3">
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="email"
+                                            required
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                        />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            placeholder="phone"
+                                            required
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                        />
+                                    </div>
+                                    <div className="space-y-2 md:space-y-3">
+                                        <select
+                                            name="businessType"
+                                            required
+                                            value={formData.businessType}
+                                            onChange={handleChange}
+                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white cursor-pointer appearance-none"
+                                        >
+                                            <option value="" disabled className="bg-black text-gray-500">Business type</option>
+                                            {businessOptions.map(opt => (
+                                                <option key={opt} value={opt} className="bg-black text-white">{opt}</option>
+                                            ))}
+                                        </select>
+
+                                        {formData.businessType === 'Other' && (
+                                            <input
+                                                type="text"
+                                                name="otherBusiness"
+                                                placeholder="please specify business type"
+                                                required
+                                                value={formData.otherBusiness}
+                                                onChange={handleChange}
+                                                className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500 animate-in fade-in slide-in-from-top-1 duration-200"
+                                            />
+                                        )}
+                                    </div>
+
+                                    <div className="space-y-2 mt-2">
+                                        <p className="text-white/60 text-[10px] md:text-xs font-semibold uppercase tracking-wider px-1">main Risk Concern ?</p>
+                                        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 px-1">
+                                            {riskOptions.map((risk) => (
+                                                <label
+                                                    key={risk}
+                                                    className="flex items-center gap-2 cursor-pointer group select-none"
+                                                >
+                                                    <div className="relative flex items-center justify-center">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="peer appearance-none w-3.5 h-3.5 md:w-3.5 md:h-3.5 rounded border border-white/20 bg-white/5 checked:bg-brand-green checked:border-brand-green transition-all cursor-pointer"
+                                                            checked={formData.riskConcerns.includes(risk)}
+                                                            onChange={() => handleCheckboxChange(risk)}
+                                                        />
+                                                        <svg
+                                                            className="absolute w-2.5 h-2.5 md:w-2.5 md:h-2.5 text-black opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                            strokeWidth="4"
+                                                        >
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-white/80 text-[11px] md:text-xs group-hover:text-brand-green transition-colors">
+                                                        {risk}
+                                                    </span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
 
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full bg-brand-green text-black font-bold py-2.5 md:py-4 rounded-xl shadow-[0_10px_30px_rgba(0,210,106,0.3)] hover:brightness-105 active:scale-[0.98] transition-all text-sm flex items-center justify-center gap-2 mt-1 md:mt-2 disabled:opacity-70"
+                                        className="w-full bg-brand-green text-black font-bold py-2.5 md:py-3.5 rounded-xl shadow-[0_10px_30px_rgba(0,210,106,0.3)] hover:brightness-105 active:scale-[0.98] transition-all text-sm flex items-center justify-center gap-2 mt-2 md:mt-3 disabled:opacity-70"
                                     >
-                                        {isSubmitting ? 'Sending Request...' : 'Get Consultation'}
+                                        {isSubmitting ? 'Sending Request...' : 'Get Instant Quote'}
                                         {!isSubmitting && <ArrowRight size={16} />}
                                     </button>
                                 </form>
                             )}
                         </div>
                     </div>
+
 
                     {/* Illustration - Original placement but reduced scale for space */}
                     <div className="absolute bottom-0 left-[-5%] lg:left-[15%] pointer-events-none z-0">

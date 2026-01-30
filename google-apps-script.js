@@ -34,13 +34,15 @@ function doPost(e) {
         // Prepare row data
         const rowData = [
             getIndianTime(),                           // A: Timestamp
-            data.source || 'Direct',                  // B: Page Source
+            data.source || 'Direct',                  // B: Source
             data.formType || 'Inquiry',               // C: Form Type
             data.name || '',                           // D: Name
             data.email || '',                          // E: Email
             "'" + (data.phone || ''),                  // F: Phone
-            data.message || '',                        // G: Message
-            data.extraInfo || ''                       // H: Extra Info
+            data.businessType || '',                   // G: Business Type
+            data.services || '',                       // H: Services/Risk Concerns
+            data.message || '',                        // I: Message
+            data.extraInfo || ''                       // J: Extra Info
         ];
 
         // Add the row to the sheet
@@ -78,14 +80,16 @@ function setupSheetHeaders() {
     const sheet = ss.getSheets()[0];
 
     const headers = [
-        'Timestamp',      // A
-        'Page Source',    // B
-        'Form Type',      // C
-        'Name',           // D
-        'Email',          // E
-        'Phone',          // F
-        'Message',        // G
-        'Extra Info'      // H
+        'Timestamp',               // A
+        'Source',                 // B
+        'Form Type',               // C
+        'Name',                    // D
+        'Email',                   // E
+        'Phone',                   // F
+        'Business Type',           // G
+        'Services/Risk Concerns',  // H
+        'Message',                 // I
+        'Extra Info'               // J
     ];
 
     // Clear existing headers and add new ones
