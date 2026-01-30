@@ -70,23 +70,23 @@ export function Hero() {
 
     return (
         <section
-            className="w-full h-[100dvh] flex items-center justify-center p-3 sm:p-5 pt-[75px] md:pt-[90px] pb-3 sm:pb-5 bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
+            className="w-full min-h-screen lg:h-[100dvh] flex items-center justify-center p-3 sm:p-5 pt-[80px] md:pt-[90px] pb-8 bg-white dark:bg-[#0a0a0a] transition-colors duration-300"
         >
-            <div className="w-full max-w-[1400px] h-full relative flex flex-col items-stretch">
+            <div className="w-full max-w-[1400px] h-full lg:h-full relative flex flex-col items-stretch">
                 <div
-                    className="w-full h-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-4 sm:px-6 md:px-20 py-8 sm:py-12 md:py-20 flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6 lg:gap-10"
+                    className="w-full min-h-full lg:h-full bg-brand-green rounded-[32px] sm:rounded-[40px] relative overflow-hidden px-4 sm:px-6 md:px-20 py-10 sm:py-16 md:py-20 flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-10 lg:gap-10"
                 >
                     {/* Left Content - Original Style */}
                     <div className="max-w-[650px] z-10 text-center md:text-left relative flex-shrink-0">
                         <h1
                             className="font-bold leading-[1.15] text-black"
-                            style={{ fontSize: 'clamp(1.4rem, 5vw, 4.2rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
+                            style={{ fontSize: 'clamp(1.2rem, 5vw, 4.2rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
                         >
                             A perfect <span className="bg-white text-black px-2 sm:px-3 md:px-4 rounded-lg inline-block">insurance</span> plan created just for you.
                         </h1>
                         <p
                             className="leading-relaxed text-black/80 max-w-[350px] sm:max-w-[500px] mx-auto md:mx-0"
-                            style={{ fontSize: 'clamp(0.7rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1vh, 2rem)' }}
+                            style={{ fontSize: 'clamp(0.8rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1.5vh, 2rem)' }}
                         >
                             Customized strategies to help you secure financial stability, protect your assets, and grow your wealth.
                         </p>
@@ -108,14 +108,14 @@ export function Hero() {
                     </div>
 
                     {/* Right Content - Form in project theme (Black) */}
-                    <div className="z-20 w-full max-w-[440px] relative group shrink-0">
-                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 sm:p-5 md:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
+                    <div className="z-20 w-full lg:max-w-[465px] max-w-[440px] relative group shrink-0">
+                        <div className="bg-black rounded-[24px] md:rounded-[32px] p-4 sm:p-5 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10">
                             <div className="mb-3 md:mb-5 text-center lg:text-left">
                                 <h3 className="text-lg md:text-2xl font-bold text-white flex items-center justify-center lg:justify-start gap-2">
                                     Quick Quote
                                     <div className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></div>
                                 </h3>
-                                <p className="text-gray-400 text-[10px] md:text-sm mt-0.5 md:mt-1 uppercase tracking-widest font-bold">Protect your business today</p>
+                                <p className="text-gray-400 text-[10px] md:text-sm mt-0.5 md:mt-1.5 uppercase tracking-widest font-bold">Protect your business today</p>
                             </div>
 
                             {isSubmitted ? (
@@ -136,7 +136,7 @@ export function Hero() {
                                             required
                                             value={formData.firstName}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-[13px] focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
                                         />
                                         <input
                                             type="text"
@@ -145,7 +145,7 @@ export function Hero() {
                                             required
                                             value={formData.lastName}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-[13px] focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
                                         />
                                     </div>
                                     <div className="grid grid-cols-2 gap-2 md:gap-3">
@@ -156,7 +156,7 @@ export function Hero() {
                                             required
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-[13px] focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
                                         />
                                         <input
                                             type="tel"
@@ -165,7 +165,7 @@ export function Hero() {
                                             required
                                             value={formData.phone}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-[13px] focus:outline-none focus:border-brand-green transition-all text-white placeholder:text-gray-500"
                                         />
                                     </div>
                                     <div className="space-y-2 md:space-y-3">
@@ -174,7 +174,7 @@ export function Hero() {
                                             required
                                             value={formData.businessType}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 md:px-4 md:py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs md:text-sm focus:outline-none focus:border-brand-green transition-all text-white cursor-pointer appearance-none"
+                                            className="w-full px-3 py-2 md:px-4 md:py-3 bg-white/5 border border-white/10 rounded-xl text-xs md:text-[13px] focus:outline-none focus:border-brand-green transition-all text-white cursor-pointer appearance-none"
                                         >
                                             <option value="" disabled className="bg-black text-gray-500">Business type</option>
                                             {businessOptions.map(opt => (
@@ -220,7 +220,7 @@ export function Hero() {
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                                         </svg>
                                                     </div>
-                                                    <span className="text-white/80 text-[11px] md:text-xs group-hover:text-brand-green transition-colors">
+                                                    <span className="text-white/80 text-[11px] md:text-sm">
                                                         {risk}
                                                     </span>
                                                 </label>
@@ -231,7 +231,7 @@ export function Hero() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full bg-brand-green text-black font-bold py-2.5 md:py-3.5 rounded-xl shadow-[0_10px_30px_rgba(0,210,106,0.3)] hover:brightness-105 active:scale-[0.98] transition-all text-sm flex items-center justify-center gap-2 mt-2 md:mt-3 disabled:opacity-70"
+                                        className="w-full bg-brand-green text-black font-extrabold py-3 md:py-4 rounded-xl shadow-[0_10px_30px_rgba(0,210,106,0.3)] hover:brightness-105 active:scale-[0.98] transition-all text-sm md:text-base flex items-center justify-center gap-2 mt-3 md:mt-4 disabled:opacity-70"
                                     >
                                         {isSubmitting ? 'Sending Request...' : 'Get Instant Quote'}
                                         {!isSubmitting && <ArrowRight size={16} />}

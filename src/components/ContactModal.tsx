@@ -6,9 +6,10 @@ import { X, Shield, Clock, CheckCircle, ArrowRight } from 'lucide-react';
 interface ContactModalProps {
     isOpen: boolean;
     onClose: () => void;
+    preSelectedService?: string | null;
 }
 
-export function ContactModal({ isOpen, onClose }: ContactModalProps) {
+export function ContactModal({ isOpen, onClose, preSelectedService }: ContactModalProps) {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -23,6 +24,18 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // Pre-select service when modal opens with a service
+    useEffect(() => {
+        if (isOpen && preSelectedService) {
+            setFormData(prev => ({
+                ...prev,
+                selectedServices: prev.selectedServices.includes(preSelectedService)
+                    ? prev.selectedServices
+                    : [...prev.selectedServices, preSelectedService]
+            }));
+        }
+    }, [isOpen, preSelectedService]);
 
     // Prevent body scroll when modal is open
     useEffect(() => {
@@ -194,7 +207,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 </div>
 
                 {/* Right Panel - Form */}
-                <div className="p-4 sm:p-6 md:p-10 w-full md:w-[62%] max-h-[96vh] md:max-h-[90vh] overflow-y-auto scrollbar-hide bg-white dark:bg-[#0d0d0d] transition-colors duration-300">
+                <div className="p-6 sm:p-8 md:p-10 w-full md:w-[62%] max-h-[85vh] md:max-h-[90vh] overflow-y-auto scrollbar-hide bg-white dark:bg-[#0d0d0d] transition-colors duration-300">
                     {isSubmitted ? (
                         <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center space-y-4">
                             <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center shadow-lg shadow-brand-green/20 animate-bounce-in">
@@ -208,21 +221,21 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                             </div>
                         </div>
                     ) : (
-                        <div className="space-y-3 sm:space-y-4 md:space-y-6">
-                            <div className="space-y-1">
-                                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+                        <div className="space-y-4 sm:space-y-5 md:space-y-6">
+                            <div className="space-y-1.5">
+                                <h3 className="text-2xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                                     Get Free Consultation
                                 </h3>
-                                <p className="text-gray-500 dark:text-gray-400 text-[11px] sm:text-xs md:text-base">
+                                <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-sm md:text-base">
                                     Provide your details to get started with our expert advisors.
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
+                            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-5">
                                 {/* Name Row */}
                                 <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">FIRST NAME</label>
+                                        <label className="text-[10px] sm:text-xs md:text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-400 ml-1">FIRST NAME</label>
                                         <input
                                             type="text"
                                             name="firstName"
@@ -230,11 +243,11 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             required
                                             value={formData.firstName}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
+                                            className="w-full px-4 py-3 md:py-3.5 border border-gray-200 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-sm md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">LAST NAME</label>
+                                        <label className="text-[10px] sm:text-xs md:text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-400 ml-1">LAST NAME</label>
                                         <input
                                             type="text"
                                             name="lastName"
@@ -242,7 +255,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             required
                                             value={formData.lastName}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
+                                            className="w-full px-4 py-3 md:py-3.5 border border-gray-200 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-sm md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
                                         />
                                     </div>
                                 </div>
@@ -250,7 +263,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 {/* Email & Phone Row */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">EMAIL ADDRESS</label>
+                                        <label className="text-[10px] sm:text-xs md:text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-400 ml-1">EMAIL ADDRESS</label>
                                         <input
                                             type="email"
                                             name="email"
@@ -258,14 +271,14 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             required
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
+                                            className="w-full px-4 py-3 md:py-3.5 border border-gray-200 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-sm md:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">PHONE NUMBER</label>
+                                        <label className="text-[10px] sm:text-xs md:text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-400 ml-1">PHONE NUMBER</label>
                                         <div className="flex items-stretch border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] focus-within:ring-2 focus-within:ring-brand-green/20 focus-within:border-brand-green transition-all overflow-hidden">
-                                            <div className="flex items-center border-r border-gray-100 dark:border-white/5">
-                                                <span className="px-4 text-gray-900 dark:text-white text-xs md:text-sm font-medium">+91</span>
+                                            <div className="flex items-center border-r border-gray-200 dark:border-white/5">
+                                                <span className="px-4 text-gray-900 dark:text-white text-sm md:text-sm font-medium">+91</span>
                                             </div>
                                             <input
                                                 type="tel"
@@ -274,7 +287,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                                 required
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className="flex-1 px-4 py-2 md:py-3.5 bg-transparent text-gray-900 dark:text-white text-xs md:text-sm placeholder:text-gray-400 focus:outline-none"
+                                                className="flex-1 px-4 py-3 md:py-3.5 bg-transparent text-gray-900 dark:text-white text-sm md:text-sm placeholder:text-gray-400 focus:outline-none"
                                             />
                                         </div>
                                     </div>
@@ -283,14 +296,14 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 {/* Business Type */}
                                 <div className="grid grid-cols-1 gap-3 md:gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">BUSINESS TYPE</label>
+                                        <label className="text-[10px] sm:text-xs md:text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-400 ml-1">BUSINESS TYPE</label>
                                         <div className="space-y-3">
                                             <select
                                                 name="businessType"
                                                 required
                                                 value={formData.businessType}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-2 md:py-3.5 border border-gray-100 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-xs md:text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
+                                                className="w-full px-4 py-3 md:py-3.5 border border-gray-200 dark:border-white/5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-[#151515] text-gray-900 dark:text-white text-sm md:text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
                                             >
                                                 <option value="" disabled>Select Type</option>
                                                 {businessOptions.map(type => (
@@ -314,15 +327,15 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 </div>
 
                                 {/* Service Chips - Replace Risk Concerns */}
-                                <div className="space-y-2">
-                                    <label className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Our Insurance Services</label>
+                                <div className="space-y-2.5">
+                                    <label className="text-[10px] sm:text-xs md:text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-400 ml-1">Our Insurance Services</label>
                                     <div className="flex flex-wrap gap-1.5">
                                         {serviceOptions.map(service => (
                                             <button
                                                 key={service}
                                                 type="button"
                                                 onClick={() => toggleService(service)}
-                                                className={`px-2.5 py-1 md:px-5 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold transition-all border ${formData.selectedServices.includes(service)
+                                                className={`px-3.5 py-1.5 md:px-5 md:py-2.5 rounded-full text-xs md:text-sm font-bold transition-all border ${formData.selectedServices.includes(service)
                                                     ? 'bg-brand-green border-brand-green text-black'
                                                     : 'bg-gray-50 dark:bg-white/5 border-gray-100 dark:border-white/5 text-gray-500 dark:text-gray-400'
                                                     }`}

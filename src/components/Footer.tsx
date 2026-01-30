@@ -7,10 +7,19 @@ import { ContactModal } from './ContactModal';
 
 export function Footer() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [preSelectedService, setPreSelectedService] = useState<string | null>(null);
 
     // Listen for global open-contact event
     useEffect(() => {
-        const handleOpen = () => setIsModalOpen(true);
+        const handleOpen = (e: Event) => {
+            const customEvent = e as CustomEvent<{ service?: string }>;
+            if (customEvent.detail?.service) {
+                setPreSelectedService(customEvent.detail.service);
+            } else {
+                setPreSelectedService(null);
+            }
+            setIsModalOpen(true);
+        };
         window.addEventListener('open-contact', handleOpen);
         return () => window.removeEventListener('open-contact', handleOpen);
     }, []);
@@ -102,10 +111,10 @@ export function Footer() {
                                     <div className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green"></div>
                                 </h4>
                                 <ul className="space-y-4 text-neutral-400 text-sm">
-                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Financial Planning</Link></li>
-                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Business Planning</Link></li>
-                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Insurance Services</Link></li>
-                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Tax & Investments</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Fire Insurance</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Theft Insurance</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Cyber Insurance</Link></li>
+                                    <li><Link href="/#our-solutions" className="hover:text-brand-green transition-colors">Health Insurance</Link></li>
                                 </ul>
                             </div>
 
@@ -153,7 +162,14 @@ export function Footer() {
                     </div>
                 </div>
             </footer>
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setPreSelectedService(null);
+                }}
+                preSelectedService={preSelectedService}
+            />
         </>
     );
 }

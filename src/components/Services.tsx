@@ -88,7 +88,11 @@ export function Services() {
                         return (
                             <div
                                 key={index}
-                                onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                                onClick={() => {
+                                    // Convert title like "Fire Insurance" to "fire" to match serviceOptions
+                                    const serviceKey = service.title.split(' ')[0].toLowerCase();
+                                    window.dispatchEvent(new CustomEvent('open-contact', { detail: { service: serviceKey } }));
+                                }}
                                 className="group bg-gray-50 dark:bg-[#111] rounded-3xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100 dark:border-white/5"
                             >
                                 {/* Image */}

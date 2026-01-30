@@ -5,22 +5,22 @@ import Link from 'next/link';
 
 const blogPosts = [
     {
-        category: "Insurance",
-        title: "Understanding your insurance needs",
-        description: "Explore how to choose the right coverage that fits your life perfectly.",
-        image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+        category: "Fire Insurance",
+        title: "Protect your business from fire hazards",
+        description: "Learn how fire insurance safeguards your property and assets from unexpected fire-related damages.",
+        image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=800&auto=format&fit=crop",
     },
     {
-        category: "Tips",
-        title: "Tips for homeowners insurance",
-        description: "Essential tips to ensure your home is properly covered against risks.",
-        image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
+        category: "Cyber Insurance",
+        title: "Why cyber insurance is essential today",
+        description: "Understand how cyber insurance protects your business from data breaches and digital threats.",
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
     },
     {
-        category: "Finance",
-        title: "Life Insurance basics explained",
-        description: "A guide to understanding different types of life insurance and benefits.",
-        image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop",
+        category: "Health Insurance",
+        title: "Choosing the right health coverage",
+        description: "A comprehensive guide to selecting health insurance plans that fit your family's needs.",
+        image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=800&auto=format&fit=crop",
     }
 ];
 
