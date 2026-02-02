@@ -7,7 +7,6 @@ import { IndustryTargeting } from "@/components/IndustryTargeting";
 import { PainPoints } from "@/components/PainPoints";
 import { WhoWeAre } from "@/components/WhoWeAre";
 import { WhySecureLife } from "@/components/WhySecureLife";
-import { Blog } from "@/components/Blog";
 import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
@@ -25,7 +24,6 @@ export default function Home() {
       <WhoWeAre />
       <WhySecureLife />
       <Testimonials />
-      <Blog />
       <FAQ />
       <Footer />
     </main>

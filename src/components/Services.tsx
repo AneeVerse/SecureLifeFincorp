@@ -1,10 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { ArrowRight, Flame, Shield, Cpu, Heart, User, DollarSign, Cog, Users, LucideIcon } from 'lucide-react';
+import { ArrowRight, Cpu, Flame, Scale, Heart, TrendingDown, Truck, Banknote, Ship, Package, LucideIcon } from 'lucide-react';
 
 interface ServiceItem {
     title: string;
+    subtitle: string;
     description: string;
     bestFor: string;
     image: string;
@@ -14,68 +15,76 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
     {
-        title: "Fire Insurance",
-        description: "Protects business premises, inventory, and equipment against fire-related risks.",
-        bestFor: "Offices, shops, factories, warehouses",
+        title: "Cyber Insurance",
+        subtitle: "Digital Protection",
+        description: "Covers losses from data breaches, hacking, ransomware attacks, legal liabilities and recovery costs.",
+        bestFor: "Businesses with online presence, customer data, payments or digital services",
+        image: "/images/service/cyber.png",
+        icon: Cpu,
+        tags: ["Digital", "Data Security"],
+    },
+    {
+        title: "Property Insurance",
+        subtitle: "Fire, Burglary & Allied Perils",
+        description: "Covers damage to your business property, stock, equipment and contents due to fire, flood, earthquake, storms, riots, burglary and theft.",
+        bestFor: "Retail shops, offices, warehouses, small factories",
         image: "/images/service/fire.png",
         icon: Flame,
         tags: ["Property", "Business"],
     },
     {
-        title: "Theft & Burglary Insurance",
-        description: "Covers loss of stock, goods, and assets due to theft or break-ins.",
-        bestFor: "Trading, retail, storage businesses",
-        image: "/images/service/thef.png",
-        icon: Shield,
-        tags: ["Property", "Security"],
+        title: "Liability Insurance",
+        subtitle: "Third-Party Protection",
+        description: "Protects against third-party claims including Public Liability, Product Liability, Professional E&O, and D&O Insurance.",
+        bestFor: "Manufacturers, service businesses, consultants, IT firms",
+        image: "/images/service/financial.png",
+        icon: Scale,
+        tags: ["Liability", "Legal"],
     },
     {
-        title: "Cyber Insurance",
-        description: "Covers financial and operational losses from data breaches, cyber incidents, and system downtime.",
-        bestFor: "IT, services, digitally dependent businesses",
-        image: "/images/service/cyber.png",
-        icon: Cpu,
-        tags: ["Digital", "Business"],
-    },
-    {
-        title: "Health Insurance",
-        description: "Group health coverage for employees to manage medical costs and meet compliance needs.",
-        bestFor: "Businesses with growing teams",
+        title: "Group Health & Employee",
+        subtitle: "Workforce Coverage",
+        description: "Group Health Insurance for medical coverage and Workmen's Compensation for workplace injuries — legally required in many cases.",
+        bestFor: "Businesses with teams and on-site staff",
         image: "/images/service/health.png",
         icon: Heart,
         tags: ["Employee", "Compliance"],
     },
     {
-        title: "Personal Insurance",
-        description: "Financial protection for business owners and key individuals.",
-        bestFor: "Founders, partners, directors",
+        title: "Business Interruption",
+        subtitle: "Loss of Profit Insurance",
+        description: "Covers loss of income if operations are disrupted due to fire, natural disasters or insured perils. Helps pay salaries, rent and ongoing costs.",
+        bestFor: "All businesses dependent on continuous operations",
         image: "/images/service/personal.png",
-        icon: User,
-        tags: ["Personal", "Key Person"],
+        icon: TrendingDown,
+        tags: ["Income", "Recovery"],
     },
     {
-        title: "Financial & Liability Insurance",
-        description: "Protection against third-party claims, professional risks, and legal exposure.",
-        bestFor: "Client-facing and service businesses",
-        image: "/images/service/financial.png",
-        icon: DollarSign,
-        tags: ["Liability", "Professional"],
-    },
-    {
-        title: "Machinery Insurance",
-        description: "Covers machinery and equipment against breakdown and operational damage.",
-        bestFor: "Manufacturing and logistics units",
+        title: "Commercial Vehicle",
+        subtitle: "Fleet Insurance",
+        description: "Covers damage, theft and third-party liabilities for business vehicles including delivery vans, cars and trucks — mandated by law.",
+        bestFor: "Businesses with delivery or transport vehicles",
         image: "/images/service/machinary.png",
-        icon: Cog,
-        tags: ["Industrial", "Equipment"],
+        icon: Truck,
+        tags: ["Vehicle", "Transport"],
     },
     {
-        title: "Employee Insurance",
-        description: "Coverage for employee-related risks such as workplace accidents and liabilities.",
-        bestFor: "Businesses with on-site staff",
+        title: "Money & Fidelity",
+        subtitle: "Cash & Employee Trust",
+        description: "Money Insurance covers loss of cash in transit or premises. Fidelity Guarantee protects against employee dishonesty or fraud.",
+        bestFor: "Cash-handling businesses, retail, trading",
+        image: "/images/service/thef.png",
+        icon: Banknote,
+        tags: ["Cash", "Security"],
+    },
+    {
+        title: "Marine & Cargo",
+        subtitle: "Transit Insurance",
+        description: "Insures goods in transit against damage or loss for businesses that import, export or transport goods.",
+        bestFor: "Import/export businesses, traders, manufacturers",
         image: "/images/service/employe.png",
-        icon: Users,
-        tags: ["Workforce", "Compliance"],
+        icon: Ship,
+        tags: ["Transit", "Trade"],
     },
 ];
 
@@ -127,6 +136,7 @@ export function Services() {
                                             </div>
                                         </div>
                                         <h3 className="text-xl font-bold text-white">{service.title}</h3>
+                                        <p className="text-white/80 text-sm">{service.subtitle}</p>
                                     </div>
                                 </div>
 

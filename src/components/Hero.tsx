@@ -78,7 +78,7 @@ export function Hero() {
                     <div className="max-w-[650px] z-10 text-center md:text-left relative flex-shrink-0">
                         <h1
                             className="font-bold leading-[1.15] text-black"
-                            style={{ fontSize: 'clamp(1.2rem, 5vw, 3.5rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
+                            style={{ fontSize: 'clamp(1.5rem, 5vw, 3.5rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
                         >
                             Get the right <span className="bg-white text-black px-2 sm:px-3 md:px-4 rounded-lg inline-block">business insurance</span> without confusion, overspending, or gaps.
                         </h1>
