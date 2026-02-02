@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { X, Shield, Clock, CheckCircle, ArrowRight } from 'lucide-react';
 
 interface ContactModalProps {
@@ -10,6 +11,7 @@ interface ContactModalProps {
 }
 
 export function ContactModal({ isOpen, onClose, preSelectedService }: ContactModalProps) {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -88,24 +90,9 @@ export function ContactModal({ isOpen, onClose, preSelectedService }: ContactMod
                 throw new Error(data.error || 'Failed to send message');
             }
 
-            setIsSubmitted(true);
-
-            // Reset after showing success
-            setTimeout(() => {
-                setIsSubmitted(false);
-                setFormData({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    countryCode: '+91',
-                    phone: '',
-                    businessType: '',
-                    otherBusiness: '',
-                    selectedServices: [],
-                    message: ''
-                });
-                onClose();
-            }, 2500);
+            // Redirect to thank you page
+            onClose();
+            router.push('/thank-you');
 
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');

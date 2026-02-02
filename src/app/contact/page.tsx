@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 
 export default function ContactPage() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -62,21 +64,8 @@ export default function ContactPage() {
                 throw new Error(data.error || 'Failed to send message');
             }
 
-            setIsSubmitted(true);
-
-            // Reset form after showing success
-            setTimeout(() => {
-                setIsSubmitted(false);
-                setFormData({
-                    fullName: '',
-                    email: '',
-                    countryCode: '+91',
-                    phone: '',
-                    businessType: '',
-                    selectedServices: [],
-                    message: ''
-                });
-            }, 3000);
+            // Redirect to thank you page
+            router.push('/thank-you');
 
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');

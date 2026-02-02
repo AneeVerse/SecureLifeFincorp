@@ -155,8 +155,8 @@ export function Footer() {
                                 Copyright © SecureLife Fincorp | Designed By <a href="https://www.aneeverse.com/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-green transition-colors">Aneeverse</a>
                             </p>
                             <div className="flex gap-8">
-                                <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-                                <Link href="#" className="hover:text-white transition-colors">Terms & Conditions</Link>
+                                <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                                <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
                             </div>
                         </div>
                     </div>

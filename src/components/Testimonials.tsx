@@ -3,51 +3,51 @@ import { Twitter } from 'lucide-react';
 
 const testimonials = [
     {
-        name: "Sophie Moore",
-        handle: "@sophiemoore",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop",
+        name: "Priya Sharma",
+        handle: "@priyasharma",
+        image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?q=80&w=150&h=150&auto=format&fit=crop",
         text: "SecureLife Fincorp transformed my financial outlook. Their expertise in personal planning is unmatched and highly recommended."
     },
     {
-        name: "Andy Smith",
-        handle: "@andysmith",
+        name: "Rajesh Patel",
+        handle: "@rajeshpatel",
         image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Managing business finances became seamless with their guidance. A true partner in growth and sustainable success."
     },
     {
-        name: "Lilly Woods",
-        handle: "@lillywoods",
-        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&h=150&auto=format&fit=crop",
+        name: "Ananya Gupta",
+        handle: "@ananyagupta",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Excellent insurance services that gave me real peace of mind. They really care about protecting what matters most."
     },
     {
-        name: "John Carter",
-        handle: "@johncarter",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&h=150&auto=format&fit=crop",
+        name: "Vikram Singh",
+        handle: "@vikramsingh",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Professional, knowledgeable, and always available. SecureLife is the only company I trust with my investment portfolio."
     },
     {
-        name: "Graham Hills",
-        handle: "@grahamhills",
+        name: "Arun Mehta",
+        handle: "@arunmehta",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&h=150&auto=format&fit=crop",
         text: "The team at SecureLife helped us navigate complex tax situations with ease. Their insights are invaluable for any business."
     },
     {
-        name: "Susan Houston",
-        handle: "@susanhouston",
-        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&h=150&auto=format&fit=crop",
+        name: "Neha Kapoor",
+        handle: "@nehakapoor",
+        image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=150&h=150&auto=format&fit=crop",
         text: "I finally feel in control of my financial future. Their customized strategies are practical and easy to follow."
     },
     {
-        name: "Patrick Meyer",
-        handle: "@patrickmeyer",
-        image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=150&h=150&auto=format&fit=crop",
+        name: "Rohan Deshmukh",
+        handle: "@rohandeshmukh",
+        image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Their transition from planning to execution is flawless. A dedicated team that delivers on its promises."
     },
     {
-        name: "Ava Simmons",
-        handle: "@avasimmons",
-        image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=150&h=150&auto=format&fit=crop",
+        name: "Kavita Reddy",
+        handle: "@kavitareddy",
+        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Highly impressed by the depth of their market analysis. They empower you to make informed decisions for long-term wealth."
     }
 ];

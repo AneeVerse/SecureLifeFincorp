@@ -67,7 +67,7 @@ export function WhoWeAre() {
                     {/* Main Image */}
                     <div className="relative z-10 rounded-[32px] overflow-hidden shadow-2xl border border-white/10">
                         <Image
-                            src="/images/service/pexels-photo-6476260.jpeg"
+                            src="/images/who we are.jpg"
                             alt="Team meeting"
                             width={600}
                             height={700}

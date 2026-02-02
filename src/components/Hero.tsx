@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 export function Hero() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -55,11 +57,7 @@ export function Hero() {
                 }),
             });
             if (response.ok) {
-                setIsSubmitted(true);
-                setTimeout(() => {
-                    setIsSubmitted(false);
-                    setFormData({ firstName: '', lastName: '', email: '', phone: '', businessType: '', otherBusiness: '', riskConcerns: [] });
-                }, 3000);
+                router.push('/thank-you');
             }
         } catch (err) {
             console.error(err);
