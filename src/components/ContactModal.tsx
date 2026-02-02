@@ -133,7 +133,7 @@ export function ContactModal({ isOpen, onClose, preSelectedService }: ContactMod
     const businessOptions = ['Manufacturing', 'Retail', 'IT', 'Other'];
     const serviceOptions = [
         'fire', 'theft', 'cyber', 'health',
-        'personal', 'financial', 'machinery', 'employe'
+        'personal', 'financial', 'machinery', 'employee'
     ];
 
     if (!isOpen) return null;

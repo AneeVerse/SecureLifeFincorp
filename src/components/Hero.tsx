@@ -20,7 +20,7 @@ export function Hero() {
     const businessOptions = ['Manufacturing', 'Retail', 'IT', 'Other'];
     const riskOptions = [
         'fire', 'theft', 'cyber', 'health',
-        'personal', 'financial', 'machinery', 'employe'
+        'personal', 'financial', 'machinery', 'employee'
     ];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -91,7 +91,7 @@ export function Hero() {
                             Customized strategies to help you secure financial stability, protect your assets, and grow your wealth.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-2.5 sm:gap-3 md:gap-5">
+                        <div className="hidden md:flex flex-col sm:flex-row justify-center md:justify-start gap-2.5 sm:gap-3 md:gap-5">
                             <button
                                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                 className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95 px-6 py-3 sm:px-8 sm:py-3.5 text-sm sm:text-base"
