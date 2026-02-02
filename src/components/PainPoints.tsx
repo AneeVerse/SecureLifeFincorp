@@ -4,20 +4,16 @@ import { AlertTriangle, Shield, ArrowRight } from 'lucide-react';
 
 const painPoints = [
     {
-        hook: '75% of Mumbai MSMEs are underinsured',
-        detail: 'Most small business owners discover gaps in their coverage only after a major loss. Don\'t be one of them.',
+        hook: 'Fire incidents, cyber issues, employee claims, or operational disruptions',
+        detail: 'Most business risks don\'t come with a warning. These can affect any business regardless of size or industry.',
     },
     {
-        hook: 'If Your Network Goes Down for 1 Day, Can Your Business Survive?',
-        detail: 'Cyber attacks, data breaches, and IT failures can halt operations instantly. Digital protection is no longer optional.',
+        hook: 'Being prepared isn\'t about buying more insurance',
+        detail: 'It\'s about having the right coverage in place before something goes wrong.',
     },
     {
-        hook: 'Hackers Don\'t Target Corporates First — They Target MSMEs',
-        detail: 'Small businesses are easier targets with weaker defenses. Cyber insurance protects your data, clients, and reputation.',
-    },
-    {
-        hook: 'One Fire Incident Can Wipe Out Years of Hard Work',
-        detail: 'Fire, theft, or natural disasters can destroy inventory, equipment, and your livelihood in hours.',
+        hook: 'That\'s what we help businesses do',
+        detail: 'We ensure you have practical, relevant insurance that works when it\'s actually needed — not just on paper.',
     },
 ];
 
@@ -40,22 +36,25 @@ export function PainPoints() {
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight max-w-3xl mx-auto">
                         Are You Prepared for the <span className="text-red-400">Unexpected?</span>
                     </h2>
+                    <p className="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
+                        Most business risks don't come with a warning.
+                    </p>
                 </div>
 
                 {/* Pain Points Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                     {painPoints.map((point, index) => (
                         <div
                             key={index}
                             className="group bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-brand-green/50 hover:bg-white/10 transition-all duration-300"
                         >
-                            <div className="flex items-start gap-4">
+                            <div className="flex flex-col gap-4">
                                 <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
                                     <span className="text-red-400 font-bold">{index + 1}</span>
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-bold text-white mb-2 leading-tight">
-                                        "{point.hook}"
+                                        {point.hook}
                                     </h3>
                                     <p className="text-gray-400 text-sm leading-relaxed">
                                         {point.detail}
@@ -73,7 +72,7 @@ export function PainPoints() {
                         className="inline-flex items-center gap-3 bg-brand-green text-black font-bold px-8 py-4 rounded-xl shadow-lg shadow-brand-green/30 hover:brightness-105 active:scale-[0.98] transition-all"
                     >
                         <Shield className="w-5 h-5" />
-                        Protect Your Business Now
+                        Check Coverage for My Business
                         <ArrowRight className="w-5 h-5" />
                     </button>
                     <p className="text-gray-500 text-sm mt-4">Free consultation • No obligations • Expert advice</p>

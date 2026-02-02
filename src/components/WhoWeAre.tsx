@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Target, ShieldCheck, Star } from 'lucide-react';
+import { Target, ShieldCheck, Star, CheckCircle } from 'lucide-react';
 
 export function WhoWeAre() {
     return (
@@ -17,44 +17,51 @@ export function WhoWeAre() {
                         </div>
 
                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                            Your Partners in <span className="text-brand-green">Financial Success</span>.
+                            Insurance Advisory for <span className="text-brand-green">Practical Decisions</span>
                         </h2>
 
                         <div className="space-y-4 text-neutral-400 text-base leading-relaxed max-w-xl">
                             <p className="font-semibold text-white text-lg">
-                                Helping clients achieve financial stability and wealth through tailored strategies.
+                                SecureLife Fincorp is an insurance advisory firm focused on helping businesses make informed, practical insurance decisions.
                             </p>
                             <p>
-                                We assist entrepreneurs in navigating financial complexities. Our expert advisors use proven methodologies to optimize cash-flow and ensure a secure financial future for lasting growth.
+                                We work with MSMEs, professionals, and growing companies across Mumbai & Navi Mumbai to structure insurance that is relevant to actual operations, easy to understand, and designed to work at claim time.
+                            </p>
+                            <p className="text-brand-green font-medium">
+                                No unnecessary policies. No pressure to buy.
                             </p>
                         </div>
                     </div>
 
-                    <div className="space-y-8 pt-4">
+                    <div className="space-y-6 pt-4">
                         {/* Feature 1 */}
-                        <div className="flex gap-6">
-                            <div className="w-16 h-16 rounded-full bg-brand-green/20 flex items-center justify-center flex-shrink-0">
-                                <ShieldCheck className="w-8 h-8 text-brand-green" />
+                        <div className="flex gap-4 items-start">
+                            <div className="w-6 h-6 rounded-full bg-brand-green/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <CheckCircle className="w-4 h-4 text-brand-green" />
                             </div>
-                            <div className="space-y-2">
-                                <h3 className="text-2xl font-bold text-white">Our Mission</h3>
-                                <p className="text-neutral-400">
-                                    Our Commitment to Financial Security. Dedicated to protecting what matters most to you.
-                                </p>
-                            </div>
+                            <p className="text-neutral-300">
+                                <span className="font-semibold text-white">Relevant to actual operations</span> — Coverage that matches what your business actually does
+                            </p>
                         </div>
 
                         {/* Feature 2 */}
-                        <div className="flex gap-6">
-                            <div className="w-16 h-16 rounded-full bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
-                                <Target className="w-8 h-8 text-yellow-500" />
+                        <div className="flex gap-4 items-start">
+                            <div className="w-6 h-6 rounded-full bg-brand-green/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <CheckCircle className="w-4 h-4 text-brand-green" />
                             </div>
-                            <div className="space-y-2">
-                                <h3 className="text-2xl font-bold text-white">Our Vision</h3>
-                                <p className="text-neutral-400">
-                                    Our Vision for Financial Empowerment. Building a future where your wealth works for you.
-                                </p>
+                            <p className="text-neutral-300">
+                                <span className="font-semibold text-white">Easy to understand</span> — Clear explanations, no jargon
+                            </p>
+                        </div>
+
+                        {/* Feature 3 */}
+                        <div className="flex gap-4 items-start">
+                            <div className="w-6 h-6 rounded-full bg-brand-green/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <CheckCircle className="w-4 h-4 text-brand-green" />
                             </div>
+                            <p className="text-neutral-300">
+                                <span className="font-semibold text-white">Designed to work at claim time</span> — When it matters most
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -89,10 +96,10 @@ export function WhoWeAre() {
                                 </div>
                             ))}
                             <div className="w-10 h-10 rounded-full border-2 border-white bg-black text-white flex items-center justify-center text-xs font-bold">
-                                5k+
+                                100+
                             </div>
                         </div>
-                        <p className="text-black font-bold text-lg mb-1">Trusted globally</p>
+                        <p className="text-black font-bold text-lg mb-1">Trusted by MSMEs</p>
                         <div className="flex gap-1">
                             {[1, 2, 3, 4, 5].map((s) => (
                                 <Star key={s} className="w-4 h-4 text-yellow-400 fill-yellow-400" />

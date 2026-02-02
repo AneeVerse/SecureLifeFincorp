@@ -6,18 +6,23 @@ import { useState } from 'react';
 const expertiseItems = [
     {
         number: "01.",
-        title: "Personal Financial Planning",
-        description: "Tailored strategies for individual financial goals and wealth creation.",
+        title: "Identifying Real Business Risks",
+        description: "We understand how risk flows through your business and identify what actually needs protection.",
     },
     {
         number: "02.",
-        title: "Business Financial Planning",
-        description: "Expert guidance for profitable business decisions and growth strategies.",
+        title: "Structuring the Right Mix",
+        description: "We help structure the right mix of coverage that fits your operations, not just generic packages.",
     },
     {
         number: "03.",
-        title: "Insurance Services",
-        description: "Protecting your family, assets and loved ones with comprehensive coverage.",
+        title: "Coordinating Multiple Policies",
+        description: "Coordinating multiple policies logically so there are no gaps or overlaps in your protection.",
+    },
+    {
+        number: "04.",
+        title: "Claims Support When It Matters",
+        description: "Assisting during claims when support matters most — we're there when you need us.",
     },
 ];
 
@@ -51,15 +56,18 @@ export function Expertise() {
                             </span>
                         </div>
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-black dark:text-white">
-                            Comprehensive Financial Services <span className="bg-brand-green px-2 rounded-lg inline-block text-black">Tailored for You.</span>
+                            Understanding How Risk Flows <span className="bg-brand-green px-2 rounded-lg inline-block text-black">Through Your Business.</span>
                         </h2>
+                        <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-md">
+                            This approach reduces confusion, gaps, and long-term cost — giving you practical protection that works.
+                        </p>
                     </div>
 
                     <button
                         onClick={() => scrollToSection('our-solutions')}
                         className="bg-black text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-brand-green hover:text-black transition-all duration-300 transform hover:-translate-y-1"
                     >
-                        View All Offerings
+                        View All Solutions
                     </button>
                 </div>
 

@@ -1,54 +1,54 @@
 import Image from 'next/image';
-import { Twitter } from 'lucide-react';
+import { Twitter, Quote } from 'lucide-react';
 
 const testimonials = [
     {
-        name: "Priya Sharma",
-        handle: "@priyasharma",
+        name: "SME Owner",
+        handle: "Mumbai",
         image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "SecureLife Fincorp transformed my financial outlook. Their expertise in personal planning is unmatched and highly recommended."
+        text: "Clear explanation and no pressure to buy. SecureLife helped us understand exactly what coverage we needed."
     },
     {
-        name: "Rajesh Patel",
-        handle: "@rajeshpatel",
+        name: "Business Founder",
+        handle: "Navi Mumbai",
         image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "Managing business finances became seamless with their guidance. A true partner in growth and sustainable success."
+        text: "Helped us understand what was actually needed. No unnecessary policies, just practical coverage."
     },
     {
-        name: "Ananya Gupta",
-        handle: "@ananyagupta",
+        name: "Manufacturing Unit Owner",
+        handle: "Mumbai",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "Excellent insurance services that gave me real peace of mind. They really care about protecting what matters most."
+        text: "They structured our fire and machinery insurance in a way that made sense for our operations."
     },
     {
-        name: "Vikram Singh",
-        handle: "@vikramsingh",
+        name: "IT Services Director",
+        handle: "Navi Mumbai",
         image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "Professional, knowledgeable, and always available. SecureLife is the only company I trust with my investment portfolio."
+        text: "Got excellent guidance on cyber insurance. The team understood our digital risks perfectly."
     },
     {
-        name: "Arun Mehta",
-        handle: "@arunmehta",
+        name: "Retail Business Owner",
+        handle: "Mumbai",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "The team at SecureLife helped us navigate complex tax situations with ease. Their insights are invaluable for any business."
+        text: "The claims support was invaluable. They were there when we actually needed help."
     },
     {
-        name: "Neha Kapoor",
-        handle: "@nehakapoor",
+        name: "Trading Company Partner",
+        handle: "Mumbai",
         image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "I finally feel in control of my financial future. Their customized strategies are practical and easy to follow."
+        text: "Straightforward advice and transparent process. They helped coordinate all our policies logically."
     },
     {
-        name: "Rohan Deshmukh",
-        handle: "@rohandeshmukh",
+        name: "Logistics Firm Owner",
+        handle: "Navi Mumbai",
         image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "Their transition from planning to execution is flawless. A dedicated team that delivers on its promises."
+        text: "Finally found an advisor who understands MSME needs. Practical solutions without the sales pressure."
     },
     {
-        name: "Kavita Reddy",
-        handle: "@kavitareddy",
+        name: "Professional Services Firm",
+        handle: "Mumbai",
         image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&h=150&auto=format&fit=crop",
-        text: "Highly impressed by the depth of their market analysis. They empower you to make informed decisions for long-term wealth."
+        text: "Their business-first approach was refreshing. They focused on our actual risks, not just selling products."
     }
 ];
 
@@ -63,7 +63,7 @@ export function Testimonials() {
                     Don't take our word for it, <span className="bg-brand-green px-3 rounded-lg text-black">take theirs.</span>
                 </h2>
                 <p className="text-neutral-500 max-w-2xl mx-auto">
-                    Join thousands of satisfied clients who have secured their financial future with SecureLife Fincorp.
+                    Business owners choose SecureLife Fincorp for clarity, transparency, and structured advice.
                 </p>
             </div>
 
@@ -103,10 +103,10 @@ function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
                         <p className="text-sm text-neutral-400">{item.handle}</p>
                     </div>
                 </div>
-                <Twitter className="w-5 h-5 text-brand-green" />
+                <Quote className="w-5 h-5 text-brand-green" />
             </div>
             <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed whitespace-normal">
-                {item.text}
+                "{item.text}"
             </p>
         </div>
     );

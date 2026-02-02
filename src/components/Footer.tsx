@@ -45,10 +45,10 @@ export function Footer() {
                                 Let's work together
                             </span>
                             <h2 className="text-3xl md:text-6xl font-bold text-black tracking-tight">
-                                Get in Touch with Us!
+                                Make Informed Decisions
                             </h2>
                             <p className="text-black/70 max-w-xl mx-auto text-base md:text-lg font-medium">
-                                Subscribe to our newsletter and get cutting-edge insights delivered to your inbox.
+                                Whether you're reviewing existing insurance or planning coverage for the first time, we help you make informed decisions with clarity.
                             </p>
                         </div>
 
@@ -56,7 +56,7 @@ export function Footer() {
                             onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                             className="relative z-10 bg-[#0D121F] text-white px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl"
                         >
-                            Get In touch
+                            Get a Structured Recommendation
                         </button>
                     </div>
                 </div>
@@ -152,7 +152,7 @@ export function Footer() {
                         {/* Bottom Bar */}
                         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-neutral-500 text-xs md:text-sm font-medium border-t border-white/5 pt-10">
                             <p className="text-center md:text-left">
-                                Copyright © SecureLife Fincorp | Designed By <a href="https://www.aneeverse.com/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-green transition-colors">Aneeverse</a>
+                                Copyright © 2026 SecureLife Fincorp | Designed By <a href="https://www.aneeverse.com/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-green transition-colors">Aneeverse</a>
                             </p>
                             <div className="flex gap-8">
                                 <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>

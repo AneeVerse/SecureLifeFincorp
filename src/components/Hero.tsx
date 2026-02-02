@@ -78,15 +78,15 @@ export function Hero() {
                     <div className="max-w-[650px] z-10 text-center md:text-left relative flex-shrink-0">
                         <h1
                             className="font-bold leading-[1.15] text-black"
-                            style={{ fontSize: 'clamp(1.2rem, 5vw, 4.2rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
+                            style={{ fontSize: 'clamp(1.2rem, 5vw, 3.5rem)', marginBottom: 'clamp(0.4rem, 1vh, 1.5rem)' }}
                         >
-                            A perfect <span className="bg-white text-black px-2 sm:px-3 md:px-4 rounded-lg inline-block">insurance</span> plan created just for you.
+                            Get the right <span className="bg-white text-black px-2 sm:px-3 md:px-4 rounded-lg inline-block">business insurance</span> without confusion, overspending, or gaps.
                         </h1>
                         <p
-                            className="leading-relaxed text-black/80 max-w-[350px] sm:max-w-[500px] mx-auto md:mx-0"
+                            className="leading-relaxed text-black/80 max-w-[500px] sm:max-w-[550px] mx-auto md:mx-0"
                             style={{ fontSize: 'clamp(0.8rem, 2vw, 1.125rem)', marginBottom: 'clamp(0.6rem, 1.5vh, 2rem)' }}
                         >
-                            Customized strategies to help you secure financial stability, protect your assets, and grow your wealth.
+                            We help Mumbai & Navi Mumbai business owners choose insurance that fits their business size, industry, and real risks — so coverage works when it's actually needed.
                         </p>
 
                         <div className="hidden md:flex flex-col sm:flex-row justify-center md:justify-start gap-2.5 sm:gap-3 md:gap-5">
@@ -94,13 +94,13 @@ export function Hero() {
                                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                 className="bg-black text-white rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-neutral-800 hover:-translate-y-0.5 active:scale-95 px-6 py-3 sm:px-8 sm:py-3.5 text-sm sm:text-base"
                             >
-                                Get insurance
+                                Check coverage for my business
                             </button>
                             <button
                                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                                 className="bg-transparent text-black border border-black rounded-[10px] sm:rounded-[14px] font-semibold transition-all hover:bg-black/5 hover:-translate-y-0.5 active:scale-95 px-6 py-3 sm:px-8 sm:py-3.5 text-sm sm:text-base"
                             >
-                                Contact us
+                                Get a quick quote
                             </button>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ export function Hero() {
                                         <CheckCircle size={32} />
                                     </div>
                                     <h4 className="text-xl font-bold text-white tracking-tight">Request Received!</h4>
-                                    <p className="text-gray-400 text-sm">We'll contact you within 15 minutes.</p>
+                                    <p className="text-gray-400 text-sm">We'll contact you within 24–48 hours.</p>
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-2 md:space-y-3">
@@ -194,7 +194,7 @@ export function Hero() {
                                     </div>
 
                                     <div className="space-y-2 mt-2">
-                                        <p className="text-white/60 text-[10px] md:text-xs font-semibold uppercase tracking-wider px-1">main Risk Concern ?</p>
+                                        <p className="text-white/60 text-[10px] md:text-xs font-semibold uppercase tracking-wider px-1">Main Risk Concern?</p>
                                         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 px-1">
                                             {riskOptions.map((risk) => (
                                                 <label

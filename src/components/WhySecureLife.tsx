@@ -1,38 +1,38 @@
 'use client';
 
 import Image from 'next/image';
-import { Check, Clock, Users, FileCheck, Headphones, MapPin } from 'lucide-react';
+import { Check, Clock, Users, FileCheck, Headphones, MapPin, UserCheck, Phone } from 'lucide-react';
 
 const benefits = [
     {
         icon: FileCheck,
-        title: 'One-Stop Risk Cover',
-        description: 'Fire, theft, cyber, health, machinery — all under one comprehensive strategy.',
-    },
-    {
-        icon: Clock,
-        title: 'Quick Approval',
-        description: 'Get your policy within 24 hours. Fast processing, minimal paperwork.',
-    },
-    {
-        icon: Users,
-        title: 'Employee Cover Included',
-        description: 'Group health and worker compensation plans to protect your workforce.',
+        title: 'Business-First Approach',
+        description: 'We focus on understanding your business first, not pushing products.',
     },
     {
         icon: Check,
-        title: 'Tax Benefits',
-        description: 'Business insurance premiums are tax-deductible under Section 37(1).',
+        title: 'Clear Explanation',
+        description: 'Clear explanation before any decision. No confusing jargon.',
+    },
+    {
+        icon: Phone,
+        title: 'No Pushy Sales Calls',
+        description: 'We respect your time and decision-making process.',
     },
     {
         icon: Headphones,
-        title: 'Dedicated Manager',
-        description: 'Personal relationship manager for claims support and policy renewals.',
+        title: 'Support Beyond Policy',
+        description: 'Support beyond policy issuance — we\'re there when you need us.',
     },
     {
-        icon: MapPin,
-        title: 'Local Expertise',
-        description: 'Specialized in Mumbai & Navi Mumbai MSME sector for 15+ years.',
+        icon: Users,
+        title: 'Multi-Sector Experience',
+        description: 'Experience across multiple business sectors and industries.',
+    },
+    {
+        icon: UserCheck,
+        title: 'Decide Correctly',
+        description: 'Our role is to help you decide correctly — not quickly.',
     },
 ];
 
@@ -52,8 +52,8 @@ export function WhySecureLife() {
                             />
                             {/* Floating Badge */}
                             <div className="absolute -bottom-6 -right-6 bg-brand-green text-black p-6 rounded-2xl shadow-xl">
-                                <div className="text-3xl font-black">15+</div>
-                                <div className="text-sm font-medium">Years Protecting<br />Mumbai MSMEs</div>
+                                <div className="text-3xl font-black">100%</div>
+                                <div className="text-sm font-medium">Focused on<br />Your Business</div>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@ export function WhySecureLife() {
                             Why <span className="text-brand-green">SecureLife</span> Fincorp?
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 text-lg mb-10">
-                            Your Business Risk Protection Partner. Protect your business, people, and profits — under one risk cover strategy.
+                            Our role is to help you decide correctly — not quickly. We prioritize your business needs over sales targets.
                         </p>
 
                         {/* Benefits Grid */}
