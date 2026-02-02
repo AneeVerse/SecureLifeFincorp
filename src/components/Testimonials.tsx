@@ -3,50 +3,50 @@ import { Twitter, Quote } from 'lucide-react';
 
 const testimonials = [
     {
-        name: "SME Owner",
-        handle: "Mumbai",
+        name: "Priya Sharma",
+        handle: "SME Owner, Mumbai",
         image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Clear explanation and no pressure to buy. SecureLife helped us understand exactly what coverage we needed."
     },
     {
-        name: "Business Founder",
-        handle: "Navi Mumbai",
+        name: "Rajesh Patel",
+        handle: "Business Founder, Navi Mumbai",
         image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Helped us understand what was actually needed. No unnecessary policies, just practical coverage."
     },
     {
-        name: "Manufacturing Unit Owner",
-        handle: "Mumbai",
+        name: "Ananya Gupta",
+        handle: "Manufacturing Unit Owner, Mumbai",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&h=150&auto=format&fit=crop",
         text: "They structured our fire and machinery insurance in a way that made sense for our operations."
     },
     {
-        name: "IT Services Director",
-        handle: "Navi Mumbai",
+        name: "Vikram Singh",
+        handle: "IT Services Director, Navi Mumbai",
         image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Got excellent guidance on cyber insurance. The team understood our digital risks perfectly."
     },
     {
-        name: "Retail Business Owner",
-        handle: "Mumbai",
+        name: "Arun Mehta",
+        handle: "Retail Business Owner, Mumbai",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&h=150&auto=format&fit=crop",
         text: "The claims support was invaluable. They were there when we actually needed help."
     },
     {
-        name: "Trading Company Partner",
-        handle: "Mumbai",
+        name: "Neha Kapoor",
+        handle: "Trading Company Partner, Mumbai",
         image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Straightforward advice and transparent process. They helped coordinate all our policies logically."
     },
     {
-        name: "Logistics Firm Owner",
-        handle: "Navi Mumbai",
+        name: "Rohan Deshmukh",
+        handle: "Logistics Firm Owner, Navi Mumbai",
         image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Finally found an advisor who understands MSME needs. Practical solutions without the sales pressure."
     },
     {
-        name: "Professional Services Firm",
-        handle: "Mumbai",
+        name: "Kavita Reddy",
+        handle: "Professional Services Firm, Mumbai",
         image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&h=150&auto=format&fit=crop",
         text: "Their business-first approach was refreshing. They focused on our actual risks, not just selling products."
     }
