@@ -12,7 +12,7 @@ export default function ThankYouPage() {
     }, []);
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0d1a0f] to-[#0a0a0a] text-white flex items-center justify-center px-5 py-20">
+        <main className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0a0f14] to-[#0a0a0a] text-white flex items-center justify-center px-5 py-20">
             {/* Background decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-green/10 rounded-full blur-[120px]" />
@@ -24,8 +24,8 @@ export default function ThankYouPage() {
                 <div className={`flex justify-center transition-all duration-500 delay-200 ${mounted ? 'scale-100' : 'scale-0'}`}>
                     <div className="relative">
                         <div className="absolute inset-0 bg-brand-green rounded-full blur-2xl opacity-30 animate-pulse" />
-                        <div className="relative w-24 h-24 bg-brand-green rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,210,106,0.4)]">
-                            <CheckCircle size={48} className="text-black" strokeWidth={2.5} />
+                        <div className="relative w-24 h-24 bg-brand-green rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,112,192,0.4)]">
+                            <CheckCircle size={48} className="text-white" strokeWidth={2.5} />
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ export default function ThankYouPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
                     <Link
                         href="/"
-                        className="inline-flex items-center justify-center gap-2 bg-brand-green text-black font-bold px-8 py-4 rounded-xl hover:brightness-110 transition-all active:scale-[0.98] shadow-lg shadow-brand-green/20"
+                        className="inline-flex items-center justify-center gap-2 bg-brand-green text-white font-bold px-8 py-4 rounded-xl hover:brightness-110 transition-all active:scale-[0.98] shadow-lg shadow-brand-green/20"
                     >
                         Back to Home
                         <ArrowRight size={18} />

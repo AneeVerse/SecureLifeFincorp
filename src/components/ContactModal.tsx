@@ -148,38 +148,38 @@ export function ContactModal({ isOpen, onClose, preSelectedService }: ContactMod
                 </button>
 
                 {/* Left Panel - Brand Info - Hidden on mobile */}
-                <div className="hidden md:flex bg-gradient-to-br from-brand-green to-[#00B85F] p-6 md:p-10 md:w-[38%] text-black flex-col justify-between relative overflow-hidden">
+                <div className="hidden md:flex bg-gradient-to-br from-brand-green to-[#004d80] p-6 md:p-10 md:w-[38%] text-white flex-col justify-between relative overflow-hidden">
                     <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none" />
 
                     <div className="relative z-10">
-                        <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center mb-8 shadow-xl transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-8 shadow-xl transform -rotate-3 hover:rotate-0 transition-transform duration-300">
                             <Shield size={24} className="text-brand-green" />
                         </div>
                         <h3 className="text-3xl lg:text-4xl font-bold mb-4 tracking-tight leading-tight">
                             Secure your Future today.
                         </h3>
-                        <p className="text-black/70 text-sm mb-6 leading-relaxed font-medium">
+                        <p className="text-white/70 text-sm mb-6 leading-relaxed font-medium">
                             Join 5,000+ businesses who trust SecureLife for their financial protection.
                         </p>
 
                         <div className="space-y-6">
                             <div className="flex items-start gap-4">
                                 <div className="p-2 bg-white/30 rounded-xl backdrop-blur-sm border border-white/40">
-                                    <Clock size={18} className="text-black" />
+                                    <Clock size={18} className="text-white" />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-sm">Quick Approval</h4>
-                                    <p className="text-black/60 text-xs">Policy within 24 hours</p>
+                                    <p className="text-white/60 text-xs">Policy within 24 hours</p>
                                 </div>
                             </div>
 
                             <div className="flex items-start gap-4">
                                 <div className="p-2 bg-white/30 rounded-xl backdrop-blur-sm border border-white/40">
-                                    <Shield size={18} className="text-black" />
+                                    <Shield size={18} className="text-white" />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-sm">Fully Regulated</h4>
-                                    <p className="text-black/60 text-xs">Safe & Secure Process</p>
+                                    <p className="text-white/60 text-xs">Safe & Secure Process</p>
                                 </div>
                             </div>
                         </div>
