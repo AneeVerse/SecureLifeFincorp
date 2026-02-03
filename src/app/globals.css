@@ -2,7 +2,7 @@
 
 @theme {
   --font-outfit: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --color-brand-green: #0370b8;
+  --color-brand-green: #0070c0;
 }
 
 /* Enable .dark class based dark mode in Tailwind v4 */
