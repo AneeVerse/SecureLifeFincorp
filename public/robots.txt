@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /studio/
+Disallow: /cms/
+Disallow: /thank-you
+Disallow: /confirmation
+
+# AI Bots - Explicitly Allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Host: https://www.securelifefincorp.com
+Sitemap: https://www.securelifefincorp.com/sitemap.xml

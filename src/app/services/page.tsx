@@ -2,6 +2,15 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2, Shield, TrendingUp, Briefcase, Users } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Our Services",
+    description: "Discover our range of expert financial solutions, including personal financial planning, business consulting, insurance services, and tax-efficient investment options.",
+    alternates: {
+        canonical: "https://www.securelifefincorp.com/services",
+    },
+};
 
 const servicesDetails = [
     {

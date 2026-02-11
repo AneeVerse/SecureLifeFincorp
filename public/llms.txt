@@ -1,0 +1,25 @@
+# SecureLife Fincorp
+
+> A perfect insurance plan created just for you.
+
+## About
+SecureLife Fincorp is a leading insurance service provider in India, offering a wide range of insurance products including life insurance, health insurance, motor insurance, and more. We are committed to protecting your future with personalized and transparent insurance solutions.
+
+## Key Pages
+- Home: https://www.securelifefincorp.com/
+- About: https://www.securelifefincorp.com/about
+- Services: https://www.securelifefincorp.com/services
+- Contact: https://www.securelifefincorp.com/contact
+- Terms: https://www.securelifefincorp.com/terms-and-conditions
+- Privacy: https://www.securelifefincorp.com/privacy-policy
+
+## Services
+- Life Insurance: Secure your family's future with our comprehensive life insurance plans.
+- Health Insurance: Quality healthcare coverage for you and your loved ones.
+- Motor Insurance: Complete protection for your vehicles against unforeseen events.
+- Professional Liability: Specialized insurance for professionals and businesses.
+
+## Contact
+- Email: securelifefincorp@gmail.com
+- Phone: +91 98765 43210
+- Address: Mumbai, Maharashtra, India

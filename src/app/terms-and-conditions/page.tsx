@@ -4,6 +4,9 @@ import { ArrowLeft } from 'lucide-react';
 export const metadata = {
     title: 'Terms and Conditions | SecureLife Fincorp',
     description: 'Terms and Conditions for using SecureLife Fincorp services and website.',
+    alternates: {
+        canonical: 'https://www.securelifefincorp.com/terms-and-conditions',
+    },
 };
 
 export default function TermsAndConditionsPage() {

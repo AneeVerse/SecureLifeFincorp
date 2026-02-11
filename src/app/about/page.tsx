@@ -2,6 +2,15 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import Image from "next/image";
 import { Target, Users, Rocket } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "About Us",
+    description: "Learn more about SecureLife Fincorp, our mission, values, and how we empower small businesses and individuals through expert financial planning and insurance solutions.",
+    alternates: {
+        canonical: "https://www.securelifefincorp.com/about",
+    },
+};
 
 export default function AboutPage() {
     return (

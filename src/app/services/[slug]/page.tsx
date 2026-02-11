@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Check, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 const servicesData = [
     {
@@ -91,6 +92,30 @@ const servicesData = [
         ]
     }
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    const service = servicesData.find((s) => s.slug === slug);
+
+    if (!service) {
+        return {
+            title: "Service Not Found",
+        };
+    }
+
+    return {
+        title: service.title,
+        description: service.description,
+        alternates: {
+            canonical: `https://www.securelifefincorp.com/services/${slug}`,
+        },
+        openGraph: {
+            title: `${service.title} | SecureLife Fincorp`,
+            description: service.description,
+            images: [{ url: service.image }],
+        },
+    };
+}
 
 export function generateStaticParams() {
     return servicesData.map((service) => ({

@@ -4,6 +4,9 @@ import { ArrowLeft, Shield, Lock, Eye, UserCheck } from 'lucide-react';
 export const metadata = {
     title: 'Privacy Policy | SecureLife Fincorp',
     description: 'Privacy Policy for SecureLife Fincorp - Learn how we collect, use, and protect your personal information.',
+    alternates: {
+        canonical: 'https://www.securelifefincorp.com/privacy-policy',
+    },
 };
 
 export default function PrivacyPolicyPage() {
