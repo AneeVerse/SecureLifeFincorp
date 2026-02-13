@@ -4,7 +4,11 @@ import nodemailer from 'nodemailer';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { firstName, lastName, email, phone, message, subject, source, businessType, mainRiskConcern, selectedServices, annualTurnover, extraInfo } = body;
+        const {
+            firstName, lastName, email, phone, message, subject,
+            source, businessType, mainRiskConcern, selectedServices,
+            annualTurnover, extraInfo, userLocation, userPincode, userIp
+        } = body;
 
         // Validate required fields
         if (!firstName || !email || !phone) {
@@ -31,6 +35,10 @@ export async function POST(request: NextRequest) {
         // Handle Services / Risks
         const services = selectedServices || mainRiskConcern;
         const servicesDisplay = Array.isArray(services) ? services.join(', ') : (services || '');
+
+        // Append geolocation data to message as requested
+        const geoInfo = `\n\n--- Geolocation Info ---\nLocation: ${userLocation || 'Unknown'}\nPincode: ${userPincode || 'Unknown'}\nIP Address: ${userIp || 'Unknown'}`;
+        const finalMessage = message ? (message + geoInfo) : geoInfo;
 
         const htmlContent = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -83,7 +91,7 @@ export async function POST(request: NextRequest) {
                     <div style="margin-top: 20px;">
                         <h3 style="color: #333; font-size: 16px; margin-bottom: 10px;">Message:</h3>
                         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee; color: #555; line-height: 1.6;">
-                            ${message.replace(/\n/g, '<br>')}
+                            ${finalMessage.replace(/\n/g, '<br>')}
                         </div>
                     </div>
                     ` : ''}
@@ -124,7 +132,7 @@ export async function POST(request: NextRequest) {
                     name: fullName,
                     email: email,
                     phone: phone,
-                    message: message || '',
+                    message: finalMessage,
                     extraInfo: extraInfo || `Services: ${servicesDisplay}`,
                     businessType: businessType || '',
                     services: servicesDisplay,

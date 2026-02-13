@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import useGeoLocation from '../hooks/useGeoLocation';
 
 export function Hero() {
     const router = useRouter();
+    const userGeo = useGeoLocation();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -53,7 +55,10 @@ export function Hero() {
                     phone: formData.phone,
                     businessType: finalBusinessType,
                     mainRiskConcern: formData.riskConcerns,
-                    source: 'hero-direct-form'
+                    source: 'hero-direct-form',
+                    userLocation: userGeo ? `${userGeo.city}, ${userGeo.region}, ${userGeo.country}` : 'Unknown',
+                    userPincode: userGeo ? userGeo.pincode : 'Unknown',
+                    userIp: userGeo ? userGeo.ip : 'Unknown',
                 }),
             });
             if (response.ok) {

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { X, Shield, Clock, CheckCircle, ArrowRight } from 'lucide-react';
+import useGeoLocation from '../hooks/useGeoLocation';
 
 interface ContactModalProps {
     isOpen: boolean;
@@ -12,6 +13,7 @@ interface ContactModalProps {
 
 export function ContactModal({ isOpen, onClose, preSelectedService }: ContactModalProps) {
     const router = useRouter();
+    const userGeo = useGeoLocation();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -80,7 +82,10 @@ export function ContactModal({ isOpen, onClose, preSelectedService }: ContactMod
                     businessType: finalBusinessType,
                     mainRiskConcern: formData.selectedServices,
                     message: formData.message,
-                    source: 'high-intent-modal'
+                    source: 'high-intent-modal',
+                    userLocation: userGeo ? `${userGeo.city}, ${userGeo.region}, ${userGeo.country}` : 'Unknown',
+                    userPincode: userGeo ? userGeo.pincode : 'Unknown',
+                    userIp: userGeo ? userGeo.ip : 'Unknown',
                 }),
             });
 

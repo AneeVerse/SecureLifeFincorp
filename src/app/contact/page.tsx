@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import useGeoLocation from "@/hooks/useGeoLocation";
 
 export default function ContactPage() {
     const router = useRouter();
+    const userGeo = useGeoLocation();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -54,7 +56,10 @@ export default function ContactPage() {
                     phone: `${formData.countryCode} ${formData.phone}`,
                     extraInfo: `Business: ${formData.businessType} | Services: ${formData.selectedServices.join(', ')}`,
                     message: formData.message,
-                    source: 'contact-page-high-intent'
+                    source: 'contact-page-high-intent',
+                    userLocation: userGeo ? `${userGeo.city}, ${userGeo.region}, ${userGeo.country}` : 'Unknown',
+                    userPincode: userGeo ? userGeo.pincode : 'Unknown',
+                    userIp: userGeo ? userGeo.ip : 'Unknown',
                 }),
             });
 
